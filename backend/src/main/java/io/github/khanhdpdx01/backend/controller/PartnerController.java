@@ -9,6 +9,7 @@ import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,30 +24,34 @@ public class PartnerController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getAllWithPaging(@Valid PaginationParams params) {
         Page<Partner> partnerDtoPage = partnerService.getAllWithPaging(
                 params.getPage(),
                 params.getSize(),
                 params.getSort(),
                 params.getKeyword());
-        PaginationResponse<PartnerDto> response = PaginationAndSortUtil.map(partnerDtoPage);
+        PaginationResponse<Partner> response = PaginationAndSortUtil.map(partnerDtoPage);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getDetail(Long id) {
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
+    public ResponseEntity<?> getDetail(@PathVariable("id") Long id) {
         Partner partner = partnerService.getDetail(id);
         return ResponseEntity.status(HttpStatus.OK).body(partner);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> create(@RequestBody PartnerDto partnerDto) {
         Partner partner = partnerService.create(partnerDto);
         return ResponseEntity.status(HttpStatus.OK).body(partner);
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
     public ResponseEntity<?> update(@RequestBody Partner updatePartner) {
         partnerService.update(updatePartner);
         return new ResponseEntity<>(HttpStatus.OK);

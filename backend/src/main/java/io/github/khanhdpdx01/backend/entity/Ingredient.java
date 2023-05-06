@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -14,16 +15,18 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String type;
+    @Enumerated(EnumType.ORDINAL)
+    private IngredientType type;
     private String gtinCode;
     private String description;
     private String certificatePath;
-    private String createdAt;
+    private Timestamp createdAt;
     private String imagePath;
     private String traceUrl;
-    private Integer status;
+    @Enumerated(EnumType.ORDINAL)
+    private IngredientStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     private Partner partner;
 }

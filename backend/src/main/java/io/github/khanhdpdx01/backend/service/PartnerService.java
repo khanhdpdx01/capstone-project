@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 @PropertySource("classpath:messages.properties")
 public class PartnerService {
     private static final Logger logger = LoggerFactory.getLogger(PartnerService.class);
+
     private final PartnerRepository partnerRepository;
 
     @Value("${partner.not-found}")

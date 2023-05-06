@@ -10,7 +10,7 @@ import java.util.Collection;
 @Getter
 @Setter
 public class UserPrinciple extends User {
-    private int userId;
+    private long userId;
     private String role;
     private boolean active;
 

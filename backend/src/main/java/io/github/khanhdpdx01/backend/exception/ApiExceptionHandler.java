@@ -33,4 +33,11 @@ public class ApiExceptionHandler {
         ErrorMessageDTO errorMessage = new ErrorMessageDTO(message, badRequest, ZonedDateTime.now());
         return new ResponseEntity<>(errorMessage, badRequest);
     }
+
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<ErrorMessageDTO> handleException(ApiRequestException e) {
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO(e.getMessage(), badRequest, ZonedDateTime.now());
+        return new ResponseEntity<>(errorMessageDTO, badRequest);
+    }
 }
