@@ -2,8 +2,8 @@ package io.github.khanhdpdx01.backend.service;
 
 import io.github.khanhdpdx01.backend.dto.ingredient.IngredientDto;
 import io.github.khanhdpdx01.backend.entity.Ingredient;
-import io.github.khanhdpdx01.backend.entity.IngredientStatus;
 import io.github.khanhdpdx01.backend.entity.Partner;
+import io.github.khanhdpdx01.backend.entity.User;
 import io.github.khanhdpdx01.backend.exception.ApiRequestException;
 import io.github.khanhdpdx01.backend.mapper.IngredientMapper;
 import io.github.khanhdpdx01.backend.repository.IngredientRepository;
@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -69,13 +68,10 @@ public class IngredientService {
         return ingredient;
     }
 
-    public Ingredient create(IngredientDto ingredientDto, List<MultipartFile> certificates, List<MultipartFile> images) {
-        if(ingredientDto.getId() != null) {
+    public Ingredient createOrUpdate(IngredientDto ingredientDto, List<MultipartFile> certificates, List<MultipartFile> images) {
+        if (ingredientDto.getId() != null) {
             getDetail(ingredientDto.getId());
         }
-
-        Partner partner = new Partner();
-        partner.setId(authenticationFacade.getUserId());
 
         Path path = Paths.get(fileDirectory, Long.toString(authenticationFacade.getUserId()));
         try {
@@ -93,22 +89,27 @@ public class IngredientService {
         }
 
         Ingredient ingredient = IngredientMapper.INSTANCE.dtoToEntity(ingredientDto);
-        ingredient.setPartner(partner);
-        ingredient.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         ingredient.setCertificatePath(StringUtil.join(FileUtil.getFilenameArray(certificates)));
         ingredient.setImagePath(StringUtil.join(FileUtil.getFilenameArray(images)));
-        ingredient.setStatus(IngredientStatus.PENDING);
 
-        Ingredient createdIngredient = ingredientRepository.save(ingredient);
-        logger.info("Partner create success: " + ingredient.getId());
+        if (ingredientDto.getId() == null) {
+            Partner partner = new Partner();
+            partner.setId(authenticationFacade.getUserId());
+            ingredient.setPartner(partner);
+        } else {
+            User user = new User();
+            user.setId(authenticationFacade.getUserId());
+            ingredient.setUpdatedBy(user);
+        }
 
-        return createdIngredient;
-    }
+        Ingredient returnedIngredient = ingredientRepository.save(ingredient);
 
-    public void update(Ingredient updateIngredient) {
-        Ingredient ingredient = getDetail(updateIngredient.getId());
+        if (ingredientDto.getId() == null) {
+            logger.info("Partner create success: " + ingredient.getId());
+        } else {
+            logger.info("Partner update success: " + ingredient.getId());
+        }
 
-        ingredientRepository.save(updateIngredient);
-        logger.info("Partner update success" + ingredient.getId());
+        return returnedIngredient;
     }
 }

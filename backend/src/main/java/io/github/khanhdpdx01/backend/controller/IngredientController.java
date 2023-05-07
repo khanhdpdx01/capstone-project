@@ -41,24 +41,17 @@ public class IngredientController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
-    public ResponseEntity<?> getDetail(Long id) {
+    public ResponseEntity<?> getDetail(@PathVariable("id") Long id) {
         Ingredient ingredient = ingredientService.getDetail(id);
         return ResponseEntity.status(HttpStatus.OK).body(ingredient);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
-    public ResponseEntity<?> create(@RequestPart("ingredient") IngredientDto ingredientDto,
-                                    @RequestPart("certificates") List<MultipartFile> certificates,
-                                    @RequestPart("images") List<MultipartFile> images) {
-        Ingredient ingredient = ingredientService.create(ingredientDto, certificates, images);
+    public ResponseEntity<?> createOrUpdate(@RequestPart("ingredient") IngredientDto ingredientDto,
+                                            @RequestPart("certificates") List<MultipartFile> certificates,
+                                            @RequestPart("images") List<MultipartFile> images) {
+        Ingredient ingredient = ingredientService.createOrUpdate(ingredientDto, certificates, images);
         return ResponseEntity.status(HttpStatus.OK).body(ingredient);
-    }
-
-    @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
-    public ResponseEntity<?> update(@RequestBody Ingredient updateIngredient) {
-        ingredientService.update(updateIngredient);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

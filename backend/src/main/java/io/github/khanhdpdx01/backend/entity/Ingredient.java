@@ -25,8 +25,13 @@ public class Ingredient {
     private String traceUrl;
     @Enumerated(EnumType.ORDINAL)
     private IngredientStatus status;
+    private Timestamp updatedAt;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(name = "partner_id")
     private Partner partner;
+
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
+    private User updatedBy;
 }

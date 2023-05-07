@@ -8,6 +8,6 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors
 public class UpdateUser {
-    private int id;
+    private long id;
     private boolean isActive;
 }

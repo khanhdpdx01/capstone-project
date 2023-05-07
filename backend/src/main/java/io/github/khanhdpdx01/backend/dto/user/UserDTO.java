@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @ToString
 public class UserDTO {
-    private int userId;
+    private long userId;
     private String fullName;
     private String username;
     private String role;
