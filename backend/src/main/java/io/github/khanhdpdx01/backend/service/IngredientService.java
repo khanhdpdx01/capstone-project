@@ -2,7 +2,6 @@ package io.github.khanhdpdx01.backend.service;
 
 import io.github.khanhdpdx01.backend.dto.ingredient.IngredientDto;
 import io.github.khanhdpdx01.backend.entity.Ingredient;
-import io.github.khanhdpdx01.backend.entity.Partner;
 import io.github.khanhdpdx01.backend.entity.User;
 import io.github.khanhdpdx01.backend.exception.ApiRequestException;
 import io.github.khanhdpdx01.backend.mapper.IngredientMapper;
@@ -93,7 +92,7 @@ public class IngredientService {
         ingredient.setImagePath(StringUtil.join(FileUtil.getFilenameArray(images)));
 
         if (ingredientDto.getId() == null) {
-            Partner partner = new Partner();
+            User partner = new User();
             partner.setId(authenticationFacade.getUserId());
             ingredient.setPartner(partner);
         } else {
@@ -105,9 +104,9 @@ public class IngredientService {
         Ingredient returnedIngredient = ingredientRepository.save(ingredient);
 
         if (ingredientDto.getId() == null) {
-            logger.info("Partner create success: " + ingredient.getId());
+            logger.info("Ingredient create success: " + ingredient.getId());
         } else {
-            logger.info("Partner update success: " + ingredient.getId());
+            logger.info("Ingredient update success: " + ingredient.getId());
         }
 
         return returnedIngredient;

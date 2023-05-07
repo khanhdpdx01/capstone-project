@@ -1,7 +1,6 @@
-package io.github.khanhdpdx01.backend.dto.ingredient;
+package io.github.khanhdpdx01.backend.dto.product;
 
-import io.github.khanhdpdx01.backend.entity.IngredientStatus;
-import io.github.khanhdpdx01.backend.entity.IngredientType;
+import io.github.khanhdpdx01.backend.entity.ProductStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,17 +10,15 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class IngredientDto {
+public class ProductDto {
     private Long id;
     private String name;
-    @Enumerated(EnumType.ORDINAL)
-    private IngredientType type;
     private String gtinCode;
     private String description;
-    private String traceUrl;
     @Enumerated(EnumType.ORDINAL)
-    private IngredientStatus status;
+    private ProductStatus status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private Long partnerId;
+    private Long rawMaterialId;
+    private Long createdBy;
 }

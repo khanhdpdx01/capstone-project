@@ -9,27 +9,28 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@Table(name = "ingredients")
-public class Ingredient {
+@Table(name = "products")
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Enumerated(EnumType.ORDINAL)
-    private IngredientType type;
     private String gtinCode;
     private String description;
     private String certificatePath;
     private String imagePath;
-    private String traceUrl;
     @Enumerated(EnumType.ORDINAL)
-    private IngredientStatus status;
+    private ProductStatus status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "partner_id")
-    private User partner;
+    @JoinColumn(name = "raw_material_id")
+    private RawMaterial rawMaterial;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User createdBy;
 
     @ManyToOne
     @JoinColumn(name = "updated_by")

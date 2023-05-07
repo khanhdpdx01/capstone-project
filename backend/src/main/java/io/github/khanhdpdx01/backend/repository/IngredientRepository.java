@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
-    @Query("SELECT p from Partner p where p.email LIKE %:keyword% OR p.phoneNumber LIKE %:keyword% ")
+    @Query("SELECT i from Ingredient i where i.name LIKE %:keyword% OR i.gtinCode LIKE %:keyword%")
     Page<Ingredient> search(@Param("keyword") String keyword, Pageable pageable);
 }
