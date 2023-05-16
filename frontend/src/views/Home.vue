@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="mx-auto px-8">
+  <div class="w-full h-[calc(100vh-80px)] mx-8">
     <main
       class="flex flex-col-reverse sm:flex-row jusitfy-between items-center py-12"
     >
@@ -10,12 +10,12 @@
         <h1
           class="uppercase text-6xl text-blue-900 font-bold leading-none tracking-wide mb-2"
         >
-          Digital
+          Website quản lý
         </h1>
         <h2
           class="uppercase text-4xl text-orange-500 text-secondary tracking-widest mb-6"
         >
-          Marketing
+          truy xuất sẩn phẩm về gạo
         </h2>
         <p class="text-gray-600 leading-relaxed mb-12">
           Lorem ipsum dolor sit amet, consectetur adipiscing. Vestibulum rutrum

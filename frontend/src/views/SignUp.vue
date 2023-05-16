@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
-    class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"
+    class="flex flex-col items-center justify-center px-6 mx-auto pt:mt-0 w-[50%] h-[calc(100vh-80px)] dark:bg-gray-900"
   >
     <a
       href=""
@@ -67,29 +67,68 @@
             required
           />
         </div>
-        <div class="flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="remember"
-              aria-describedby="remember"
-              name="remember"
-              type="checkbox"
-              class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
-              required
-            />
-          </div>
-          <div class="ml-3 text-sm">
-            <label
-              for="remember"
-              class="font-medium text-gray-900 dark:text-white"
-              >I accept the
-              <a
-                href="#"
-                class="text-blue-700 hover:underline dark:text-blue-500"
-                >Terms and Conditions</a
-              ></label
+        <div>
+          <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Register with role
+          </h3>
+          <ul
+            class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          >
+            <li
+              class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600"
             >
-          </div>
+              <div class="flex items-center pl-3">
+                <input
+                  id="horizontal-list-radio-license"
+                  type="radio"
+                  value=""
+                  name="list-radio"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label
+                  for="horizontal-list-radio-license"
+                  class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >Nhà sản xuất
+                </label>
+              </div>
+            </li>
+            <li
+              class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600"
+            >
+              <div class="flex items-center pl-3">
+                <input
+                  id="horizontal-list-radio-id"
+                  type="radio"
+                  value=""
+                  name="list-radio"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label
+                  for="horizontal-list-radio-id"
+                  class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >Nhà cung cấp</label
+                >
+              </div>
+            </li>
+            <li
+              class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600"
+            >
+              <div class="flex items-center pl-3">
+                <input
+                  id="horizontal-list-radio-millitary"
+                  type="radio"
+                  value=""
+                  name="list-radio"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label
+                  for="horizontal-list-radio-millitary"
+                  class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >Nhà phân phối</label
+                >
+              </div>
+            </li>
+          </ul>
         </div>
         <button
           type="submit"

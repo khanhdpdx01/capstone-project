@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import DashBoard from "../views/DashBoard.vue";
-import DashBoardHome from "../components/dashboard/Home.vue"
+import DashBoardHome from "../components/dashboard/Home.vue";
 
 const routes = [
   {
@@ -31,6 +31,14 @@ const routes = [
       {
         path: "products",
         component: () => import("../components/dashboard/Product.vue"),
+      },
+      {
+        path: "ingredients",
+        component: () => import("../components/ingredient/Home.vue"),
+      },
+      {
+        path: "ingredients/create",
+        component: () => import("../components/ingredient/Create.vue"),
       },
     ],
   },
