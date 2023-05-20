@@ -25,7 +25,7 @@
                       d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
                     ></path>
                   </svg>
-                  Nguyên liệu
+                  Sản phẩm
                 </a>
               </li>
               <li>
@@ -45,7 +45,7 @@
                   <a
                     href="#"
                     class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white"
-                    >Danh sách nguyên liệu</a
+                    >Danh sách sản phẩm</a
                   >
                 </div>
               </li>
@@ -54,7 +54,7 @@
           <h1
             class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
           >
-            Danh sách nguyên liệu
+            Danh sách sản phẩm
           </h1>
         </div>
         <div
@@ -80,7 +80,7 @@
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
             type="button"
           >
-            Thêm mới nguyên liệu
+            Thêm mới sản phẩm
           </button>
         </div>
       </div>
@@ -109,19 +109,19 @@
                     scope="col"
                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                   >
-                    Tên nguyên liệu
+                    Tên sản phẩm
                   </th>
                   <th
                     scope="col"
                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                   >
-                    Thể loại
+                    Gtin code
                   </th>
                   <th
                     scope="col"
                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                   >
-                    Công ty cung cấp
+                    Vùng nguyên liệu
                   </th>
                   <th
                     scope="col"
@@ -166,12 +166,12 @@
                   <td
                     class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {{ getType(product.type) }}
+                    {{ product.gtinCode }}
                   </td>
                   <td
                     class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {{ product.partner.fullName }}
+                    {{ product.rawMaterial.name }}
                   </td>
                   <td
                     class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"
@@ -180,7 +180,7 @@
                   </td>
                   <td class="p-4 space-x-2 whitespace-nowrap">
                     <button
-                      @click="updateIngredient(product.id)"
+                      @click="updateProduct(product.id)"
                       type="button"
                       id="updateProductButton"
                       class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -244,10 +244,9 @@
 
 <script>
 import Pagination from "../pagination/Pagination.vue";
-import IngredientService from "../../services/IngredientService";
-import IngredientStatus from "../../enums/IngredientStatus";
-import IngredientType from "../../enums/IngredientType";
-const ingredientService = new IngredientService();
+import ProductService from "../../services/ProductService";
+import ProductStatus from "../../enums/ProductStatus";
+const productService = new ProductService();
 
 export default {
   components: {
@@ -272,7 +271,7 @@ export default {
       this.getAll();
     },
     async getAll() {
-      const res = await ingredientService.getAll({
+      const res = await productService.getAll({
         params: {
           page: this.page.currentPage,
           size: this.page.totalItems,
@@ -287,17 +286,14 @@ export default {
       }
     },
     addIngredient() {
-      this.$router.push({ path: "/dashboard/ingredients/create" });
+      this.$router.push({ path: "/dashboard/products/create" });
     },
     updateIngredient(id) {
-      this.$router.push({ path: `/dashboard/ingredients/${id}` });
+      this.$router.push({ path: `/dashboard/products/${id}` });
     },
     getStatus(status) {
-      return IngredientStatus[status];
-    },
-    getType(type) {
-      return IngredientType[type];
-    },
+      return ProductStatus[status];
+    }
   },
 };
 </script>

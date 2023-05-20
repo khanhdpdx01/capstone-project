@@ -23,7 +23,7 @@
                       d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
                     ></path>
                   </svg>
-                  Nguyên liệu
+                  Vùng sản xuất
                 </a>
               </li>
               <li>
@@ -43,7 +43,7 @@
                   <a
                     href="#"
                     class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white"
-                    >Thêm mới nguyên liệu</a
+                    >Thông tin vùng sản xuất</a
                   >
                 </div>
               </li>
@@ -52,7 +52,7 @@
           <h1
             class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
           >
-            Thêm mới nguyên liệu
+            Thông tin vùng sản xuất
           </h1>
         </div>
       </div>
@@ -63,13 +63,13 @@
           <label
             for="name"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Tên nguyên liệu</label
+            >Tên vùng sản xuất</label
           >
           <input
             type="text"
             name="name"
             id="name"
-            v-model="ingredient.name"
+            v-model="rawMaterial.name"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             placeholder="Type product name"
             required=""
@@ -79,13 +79,13 @@
           <label
             for="name"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Mã GTIN</label
+            >Mã vùng sản xuất</label
           >
           <input
             type="text"
             name="name"
             id="name"
-            v-model="ingredient.gtinCode"
+            v-model="rawMaterial.prodUnitCode"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             placeholder="Type product name"
             required=""
@@ -93,50 +93,87 @@
         </div>
         <div class="pb-4">
           <label
-            for="category"
+            for="name"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Thể loại</label
-          >
-          <select
-            id="category"
-            v-model="ingredient.type"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          >
-            <option value="FERTILIZER">Phân bón</option>
-            <option value="INSECTICIDE">Thuốc bảo vệ thực vật</option>
-            <option value="SEED">Hạt giống</option>
-            <option value="ORTHERS">Khác</option>
-          </select>
-        </div>
-        <div class="pb-4">
-          <label
-            for="trace-url"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Link truy xuât nguồn gốc</label
+            >Địa chỉ</label
           >
           <input
             type="text"
             name="name"
-            id="trace-url"
-            v-model="ingredient.traceUrl"
+            id="name"
+            v-model="rawMaterial.address"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             placeholder="Type product name"
             required=""
           />
         </div>
-        <div class="sm:col-span-2">
-          <label
-            for="description"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Mô tả</label
-          >
-          <textarea
-            id="description"
-            v-model="ingredient.description"
-            rows="8"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            placeholder="Your description here"
-          ></textarea>
+        <div class="pb-4 grid gap-4 grid-cols-2">
+          <div>
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Diện tích</label
+            >
+            <input
+              type="text"
+              name="name"
+              id="name"
+              v-model="rawMaterial.area"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Type product name"
+              required=""
+            />
+          </div>
+          <div>
+            <label
+              for="category"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Đơn vị</label
+            >
+            <select
+              id="category"
+              v-model="rawMaterial.areaUnit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            >
+              <option value="M2">m2</option>
+              <option value="HA">ha</option>
+              <option value="KM2">km2</option>
+            </select>
+          </div>
+        </div>
+        <div class="pb-4 grid gap-4 grid-cols-2">
+          <div>
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Sản lượng</label
+            >
+            <input
+              type="text"
+              name="name"
+              id="name"
+              v-model="rawMaterial.output"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Type product name"
+              required=""
+            />
+          </div>
+          <div>
+            <label
+              for="category"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Đơn vị</label
+            >
+            <select
+              id="category"
+              v-model="rawMaterial.outputUnit"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            >
+              <option value="KG">kg</option>
+              <option value="CWT">tạ</option>
+              <option value="TON">tấn</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="px-4">
@@ -169,9 +206,9 @@
 </template>
 
 <script>
-import IngredientService from "../../services/IngredientService";
+import RawMaterialService from "../../services/RawMaterialService";
 import FileUpload from "../file/FileUpload.vue";
-const ingredientService = new IngredientService();
+const rawMaterialService = new RawMaterialService();
 
 export default {
   components: {
@@ -179,17 +216,18 @@ export default {
   },
   data() {
     return {
-      ingredient: {
-        id: 0,
-        name: "",
-        type: "FERTILIZER",
-        gtinCode: "",
-        description: "",
-        traceUrl: "",
-        status: "OPEN",
-        createdAt: "",
-        updateAt: "",
-        partnerId: 0,
+      rawMaterial: {
+        id: 1,
+        name: "Vùng trồng Duy Phước",
+        prodUnitCode: "VN1000",
+        address: "Duy Phước, Duy Xuyên",
+        area: 1000.0,
+        areaUnit: "HA",
+        output: 1000.0,
+        outputUnit: "TON",
+        createdAt: "2023-05-07T09:19:41.616+00:00",
+        updatedAt: "2023-05-08T09:19:41.616+00:00",
+        representativeId: 3,
       },
     };
   },
@@ -197,18 +235,19 @@ export default {
     const id = this.$route.params.id;
     console.log(id);
     if (id !== undefined) {
-      const res = await ingredientService.detail(id);
+      const res = await rawMaterialService.detail(id);
 
       if (res.status === 200) {
-        this.ingredient.id = res.data.id;
-        this.ingredient.name = res.data.name;
-        this.ingredient.type = res.data.type;
-        this.ingredient.gtinCode = res.data.gtinCode;
-        this.ingredient.description = res.data.description;
-        this.ingredient.traceUrl = res.data.traceUrl;
-        this.ingredient.status = res.data.status;
-        this.ingredient.createdAt = res.data.createdAt;
-        this.ingredient.partnerId = res.data.partner.id;
+        this.rawMaterial.id = res.data.id;
+        this.rawMaterial.name = res.data.name;
+        this.rawMaterial.prodUnitCode = res.data.prodUnitCode;
+        this.rawMaterial.address = res.data.address;
+        this.rawMaterial.area = res.data.area;
+        this.rawMaterial.areaUnit = res.data.areaUnit;
+        this.rawMaterial.output = res.data.output;
+        this.rawMaterial.outputUnit = res.data.outputUnit;
+        this.rawMaterial.createdAt = res.data.createdAt;
+        this.rawMaterial.updatedAt = res.data.updatedAt;
       }
     }
   },
@@ -238,10 +277,10 @@ export default {
 
       if (this.id === undefined) {
         // eslint-disable-next-line no-unused-vars
-        const { id: _, ...ingredientObj } = this.ingredient;
-        ingredientService.add(ingredientObj, imageBlobs, certificateBlobs);
+        const { id: _, ...rawMaterialObj } = this.rawMaterial;
+        rawMaterialService.add(rawMaterialObj, imageBlobs, certificateBlobs);
       } else {
-        ingredientService.add(this.ingredient, imageBlobs, certificateBlobs);
+        rawMaterialService.add(this.rawMaterial, imageBlobs, certificateBlobs);
       }
 
       localStorage.removeItem("images");

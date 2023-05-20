@@ -30,7 +30,15 @@ const routes = [
       },
       {
         path: "products",
-        component: () => import("../components/dashboard/Product.vue"),
+        component: () => import("../components/product/Home.vue"),
+      },
+      {
+        path: "products/create",
+        component: () => import("../components/product/Create.vue"),
+      },
+      {
+        path: "ingredients/:id",
+        component: () => import("../components/ingredient/Create.vue"),
       },
       {
         path: "ingredients",
@@ -39,6 +47,10 @@ const routes = [
       {
         path: "ingredients/create",
         component: () => import("../components/ingredient/Create.vue"),
+      },
+      {
+        path: "raw-material/info",
+        component: () => import("../components/raw-material/Home.vue"),
       },
     ],
   },

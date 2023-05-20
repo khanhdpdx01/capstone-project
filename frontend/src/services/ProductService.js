@@ -1,8 +1,8 @@
 import http from "./index";
 
-class IngredientService {
+class ProductService {
   getAll(params) {
-    return http.get("/ingredients", params);
+    return http.get("/products", params);
   }
   add(ingredient, images, certificates) {
     let formData = new FormData();
@@ -10,21 +10,21 @@ class IngredientService {
       type: "application/json",
     });
 
-    formData.append("ingredient", blob);
+    formData.append("product", blob);
     certificates.forEach((certificate) =>
       formData.append("certificates", certificate)
     );
     images.forEach((image) => formData.append("images", image));
 
-    return http.post(`/ingredients`, formData, {
+    return http.post(`/products`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
   }
   detail(id) {
-    return http.get(`/ingredients/${id}`);
+    return http.get(`/products/${id}`);
   }
 }
 
-export default IngredientService;
+export default ProductService;
