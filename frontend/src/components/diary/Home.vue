@@ -25,7 +25,7 @@
                       d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
                     ></path>
                   </svg>
-                  Sản phẩm
+                  Sổ ghi chép
                 </a>
               </li>
               <li>
@@ -45,7 +45,7 @@
                   <a
                     href="#"
                     class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white"
-                    >Danh sách sản phẩm</a
+                    >Danh sách sổ ghi chép</a
                   >
                 </div>
               </li>
@@ -54,7 +54,7 @@
           <h1
             class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
           >
-            Danh sách sản phẩm
+            Danh sách sổ ghi chép
           </h1>
         </div>
         <div
@@ -75,12 +75,12 @@
             </form>
           </div>
           <button
-            @click="addIngredient"
+            @click="createDiary"
             id="createProductButton"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
             type="button"
           >
-            Thêm mới sản phẩm
+            Thêm mới sổ ghi chép
           </button>
         </div>
       </div>
@@ -109,19 +109,13 @@
                     scope="col"
                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                   >
-                    Tên sản phẩm
+                    Tên sổ ghi chép
                   </th>
                   <th
                     scope="col"
                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                   >
-                    Gtin code
-                  </th>
-                  <th
-                    scope="col"
-                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-                  >
-                    Vùng nguyên liệu
+                    Sản phẩm
                   </th>
                   <th
                     scope="col"
@@ -142,8 +136,8 @@
               >
                 <tr
                   class="hover:bg-gray-100 dark:hover:bg-gray-700"
-                  v-for="product in products"
-                  :key="product.id"
+                  v-for="diary in diaries"
+                  :key="diary.id"
                 >
                   <td class="w-4 p-4">
                     <div class="flex items-center">
@@ -161,48 +155,21 @@
                   <td
                     class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {{ product.name }}
+                    {{ diary.name }}
                   </td>
                   <td
                     class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {{ product.gtinCode }}
-                  </td>
-                  <td
-                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    {{ product.rawMaterial.name }}
+                    {{ diary.product.name }}
                   </td>
                   <td
                     class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"
                   >
-                    {{ getStatus(product.status) }}
+                    {{ getStatus(diary.status) }}
                   </td>
                   <td class="p-4 space-x-2 whitespace-nowrap">
                     <button
-                      @click="showCreateDiaryModal(product.id)"
-                      type="button"
-                      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      <svg
-                        class="w-4 h-4 mr-2"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                        ></path>
-                        <path
-                          fill-rule="evenodd"
-                          d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                      Ghi chép
-                    </button>
-                    <button
-                      @click="updateProduct(product.id)"
+                      @click="updateDiary(diary.id)"
                       type="button"
                       id="updateProductButton"
                       class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -305,7 +272,6 @@
                 <input
                   type="text"
                   name="name"
-                  v-model="diary.name"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   placeholder=""
                   required
@@ -329,10 +295,8 @@
 <script>
 import { Modal } from "flowbite";
 import Pagination from "../pagination/Pagination.vue";
-import ProductService from "../../services/ProductService";
 import DiaryService from "../../services/DiaryService";
-import ProductStatus from "../../enums/ProductStatus";
-const productService = new ProductService();
+import DiaryStatus from "../../enums/DiaryStatus";
 const diaryService = new DiaryService();
 
 export default {
@@ -346,13 +310,7 @@ export default {
         totalItems: window.VUE_APP_TOTAL_ITEMS,
         currentPage: 1,
       },
-      products: [],
-      diary: {
-        name: "",
-        status: "OPENING",
-        createdAt: "2023-05-07T15:03:15.411Z",
-        productId: 0,
-      },
+      diaries: []
     };
   },
   async created() {
@@ -364,7 +322,7 @@ export default {
       this.getAll();
     },
     async getAll() {
-      const res = await productService.getAll({
+      const res = await diaryService.getAll({
         params: {
           page: this.page.currentPage,
           size: this.page.totalItems,
@@ -375,7 +333,7 @@ export default {
         const { data, currentPage, totalPages } = res.data;
         this.page.totalPages = totalPages;
         this.page.currentPage = currentPage;
-        this.products = data;
+        this.diaries = data;
       }
     },
     addIngredient() {
@@ -385,14 +343,12 @@ export default {
       this.$router.push({ path: `/dashboard/products/${id}` });
     },
     getStatus(status) {
-      return ProductStatus[status];
+      return DiaryStatus[status];
     },
-    showCreateDiaryModal(id) {
+    showCreateDiaryModal() {
       const ref = document.getElementById("create-diary-modal");
       const modal = new Modal(ref);
       modal.show();
-
-      this.diary.productId = id;
     },
     createDiary() {
       const res = diaryService.create(this.diary);

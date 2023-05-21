@@ -52,6 +52,10 @@ const routes = [
         path: "raw-material/info",
         component: () => import("../components/raw-material/Home.vue"),
       },
+      {
+        path: "diaries",
+        component: () => import("../components/diary/Home.vue"),
+      },
     ],
   },
 ];
