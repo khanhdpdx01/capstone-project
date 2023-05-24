@@ -5,8 +5,24 @@ class DiaryService {
     return http.get("/diaries", params);
   }
 
-  create(diary) {
-    return http.post("/api/diaries", diary);
+  detail(id) {
+    return http.get(`/diaries/${id}`);
+  }
+
+  add(diary, images) {
+    let formData = new FormData();
+    const blob = new Blob([JSON.stringify(diary)], {
+      type: "application/json",
+    });
+
+    formData.append("diary-detail", blob);
+    images.forEach((image) => formData.append("images", image));
+
+    return http.post(`/diary-details`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 }
 

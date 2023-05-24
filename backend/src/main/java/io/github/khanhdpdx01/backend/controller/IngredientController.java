@@ -26,6 +26,12 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
+    @GetMapping("/get-all-without-paging")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
+    public ResponseEntity<?> getAllWithPaging() {
+        return ResponseEntity.status(HttpStatus.OK).body(ingredientService.getAllWithoutPaging());
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
     public ResponseEntity<?> getAllWithPaging(@Valid PaginationParams params) {

@@ -4,6 +4,7 @@ import io.github.khanhdpdx01.backend.dto.diary.DiaryDto;
 import io.github.khanhdpdx01.backend.dto.pagination.PaginationParams;
 import io.github.khanhdpdx01.backend.dto.pagination.PaginationResponse;
 import io.github.khanhdpdx01.backend.entity.Diary;
+import io.github.khanhdpdx01.backend.entity.Ingredient;
 import io.github.khanhdpdx01.backend.service.DiaryService;
 import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;
 import org.springframework.data.domain.Page;
@@ -41,5 +42,12 @@ public class DiaryController {
     public ResponseEntity<?> createOrUpdate(@RequestBody DiaryDto diaryDto) {
         Diary diary = diaryService.create(diaryDto);
         return ResponseEntity.status(HttpStatus.OK).body(diary);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
+    public ResponseEntity<?> getDetail(@PathVariable("id") Long id) {
+        DiaryDto dto = diaryService.getDetail(id);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 }

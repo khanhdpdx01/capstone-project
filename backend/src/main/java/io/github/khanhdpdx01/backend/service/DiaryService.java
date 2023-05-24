@@ -2,30 +2,43 @@ package io.github.khanhdpdx01.backend.service;
 
 import io.github.khanhdpdx01.backend.dto.diary.DiaryDto;
 import io.github.khanhdpdx01.backend.entity.Diary;
+import io.github.khanhdpdx01.backend.entity.DiaryDetail;
 import io.github.khanhdpdx01.backend.entity.User;
+import io.github.khanhdpdx01.backend.exception.ApiRequestException;
 import io.github.khanhdpdx01.backend.mapper.DiaryMapper;
+import io.github.khanhdpdx01.backend.repository.DiaryDetailRepository;
 import io.github.khanhdpdx01.backend.repository.DiaryRepository;
 import io.github.khanhdpdx01.backend.security.AuthenticationFacade;
 import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static io.github.khanhdpdx01.backend.common.AppConstant.ADMIN;
 
 @Service
+@PropertySource("classpath:messages.properties")
 public class DiaryService {
     private static final Logger logger = LoggerFactory.getLogger(PartnerService.class);
     private final AuthenticationFacade authenticationFacade;
     private final DiaryRepository diaryRepository;
+    private final DiaryDetailRepository diaryDetailRepository;
 
-    public DiaryService(DiaryRepository diaryRepository, AuthenticationFacade authenticationFacade) {
-        this.diaryRepository = diaryRepository;
+    @Value("${diary.not-found}")
+    private String DIARY_NOT_FOUND;
+
+    public DiaryService(AuthenticationFacade authenticationFacade, DiaryRepository diaryRepository, DiaryDetailRepository diaryDetailRepository) {
         this.authenticationFacade = authenticationFacade;
+        this.diaryRepository = diaryRepository;
+        this.diaryDetailRepository = diaryDetailRepository;
     }
 
     public Diary create(DiaryDto diaryDto) {
@@ -62,5 +75,16 @@ public class DiaryService {
         }
 
         return new PageImpl<>(pageRoom.getContent(), pageable, pageRoom.getTotalElements());
+    }
+
+    public DiaryDto getDetail(Long id) {
+        Diary diary = diaryRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException(DIARY_NOT_FOUND));
+
+        List<DiaryDetail> detailList = diaryDetailRepository.findAllByDiaryId(id);
+        DiaryDto dto = DiaryMapper.INSTANCE.entityToDto(diary);
+        dto.setDiaryDetails(detailList);
+
+        return dto;
     }
 }

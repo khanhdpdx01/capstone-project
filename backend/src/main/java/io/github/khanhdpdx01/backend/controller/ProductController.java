@@ -3,7 +3,6 @@ package io.github.khanhdpdx01.backend.controller;
 import io.github.khanhdpdx01.backend.dto.pagination.PaginationParams;
 import io.github.khanhdpdx01.backend.dto.pagination.PaginationResponse;
 import io.github.khanhdpdx01.backend.dto.product.ProductDto;
-import io.github.khanhdpdx01.backend.entity.Ingredient;
 import io.github.khanhdpdx01.backend.entity.Product;
 import io.github.khanhdpdx01.backend.service.ProductService;
 import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;

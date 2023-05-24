@@ -336,12 +336,6 @@ export default {
         this.diaries = data;
       }
     },
-    addIngredient() {
-      this.$router.push({ path: "/dashboard/products/create" });
-    },
-    updateIngredient(id) {
-      this.$router.push({ path: `/dashboard/products/${id}` });
-    },
     getStatus(status) {
       return DiaryStatus[status];
     },
@@ -357,6 +351,9 @@ export default {
         console.log("Tạo sổ ghi chép thành công");
       }
     },
+    updateDiary(id) {
+      this.$router.push({ path: `/dashboard/diaries/${id}` });
+    }
   },
 };
 </script>

@@ -60,6 +60,10 @@ public class IngredientService {
         return new PageImpl<>(pageRoom.getContent(), pageable, pageRoom.getTotalElements());
     }
 
+    public List<Ingredient> getAllWithoutPaging() {
+        return ingredientRepository.findAll();
+    }
+
     public Ingredient getDetail(Long id) {
         Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new ApiRequestException(INGREDIENT_NOT_FOUND));

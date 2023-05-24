@@ -12,4 +12,7 @@ public interface DiaryMapper {
 
     @Mapping(target = "product.id", source = "diaryDto.productId")
     Diary dtoToEntity(DiaryDto diaryDto);
+
+    @Mapping(target = "productId", source = "diary.product.id")
+    DiaryDto entityToDto(Diary diary);
 }

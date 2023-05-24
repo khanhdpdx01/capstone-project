@@ -56,6 +56,10 @@ const routes = [
         path: "diaries",
         component: () => import("../components/diary/Home.vue"),
       },
+      {
+        path: "diaries/:id",
+        component: () => import("../components/diary/Create.vue"),
+      },
     ],
   },
 ];

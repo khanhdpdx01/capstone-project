@@ -4,6 +4,9 @@ class IngredientService {
   getAll(params) {
     return http.get("/ingredients", params);
   }
+  getAllWithoutPaging() {
+    return http.get("/ingredients/get-all-without-paging");
+  }
   add(ingredient, images, certificates) {
     let formData = new FormData();
     const blob = new Blob([JSON.stringify(ingredient)], {
