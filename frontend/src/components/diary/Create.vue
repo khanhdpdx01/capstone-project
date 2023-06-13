@@ -57,22 +57,10 @@
             Chi tiết sổ ghi chép
           </h1>
         </div>
-        <div
-          class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700"
-        >
-          <div class="flex items-center mb-4 sm:mb-0"></div>
-          <button
-            @click="createDetailDiary"
-            id="createProductButton"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            type="button"
-          >
-            Viết ghi chép
-          </button>
-        </div>
+        
       </div>
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row bg-white">
       <aside id="sidebar-multi-level-sidebar" class="w-64" aria-label="Sidebar">
         <div class="h-full px-3 py-4">
           <!-- <ul class="space-y-2 font-medium">
@@ -121,7 +109,7 @@
       </aside>
 
       <ol
-        class="relative border-l border-r border-gray-200 dark:border-gray-700 pr-4 w-[50%]"
+        class="relative bg-white border-l border-r border-gray-200 dark:border-gray-700 pr-4 w-[50%]"
       >
         <li
           class="mb-10 ml-6"

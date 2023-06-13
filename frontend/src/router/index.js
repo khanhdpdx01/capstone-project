@@ -60,6 +60,10 @@ const routes = [
         path: "diaries/:id",
         component: () => import("../components/diary/Create.vue"),
       },
+      {
+        path: "stamps",
+        component: () => import("../components/stamp/Home.vue"),
+      },
     ],
   },
 ];

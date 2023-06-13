@@ -4,7 +4,6 @@ import io.github.khanhdpdx01.backend.dto.diary.DiaryDto;
 import io.github.khanhdpdx01.backend.dto.pagination.PaginationParams;
 import io.github.khanhdpdx01.backend.dto.pagination.PaginationResponse;
 import io.github.khanhdpdx01.backend.entity.Diary;
-import io.github.khanhdpdx01.backend.entity.Ingredient;
 import io.github.khanhdpdx01.backend.service.DiaryService;
 import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;
 import org.springframework.data.domain.Page;

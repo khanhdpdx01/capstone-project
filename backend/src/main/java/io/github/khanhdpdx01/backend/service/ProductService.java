@@ -1,7 +1,6 @@
 package io.github.khanhdpdx01.backend.service;
 
 import io.github.khanhdpdx01.backend.dto.product.ProductDto;
-import io.github.khanhdpdx01.backend.entity.Ingredient;
 import io.github.khanhdpdx01.backend.entity.Product;
 import io.github.khanhdpdx01.backend.entity.User;
 import io.github.khanhdpdx01.backend.exception.ApiRequestException;
@@ -109,13 +108,13 @@ public class ProductService {
         Page<Product> pageRoom;
 
         if (keyword == null || StringUtils.isBlank(keyword)) {
-            if(ADMIN.equals(role)) {
+            if (ADMIN.equals(role)) {
                 pageRoom = productRepository.findAll(pageable);
             } else {
                 pageRoom = productRepository.findAll(userId, pageable);
             }
         } else {
-            if(ADMIN.equals(role)) {
+            if (ADMIN.equals(role)) {
                 pageRoom = productRepository.search(null, keyword, pageable);
             } else {
                 pageRoom = productRepository.search(userId, keyword, pageable);
