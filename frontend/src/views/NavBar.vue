@@ -2,8 +2,8 @@
   <nav
     class="fixed top-0 z-50 w-full h-[80px] bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
   >
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
-      <div class="flex items-center justify-between">
+    <div class="h-full px-3 py-3 lg:px-5 lg:pl-3">
+      <div class="h-full flex items-center justify-between">
         <div class="flex items-center justify-start">
           <button
             data-drawer-target="logo-sidebar"
@@ -40,29 +40,7 @@
           </router-link>
         </div>
         <div class="flex items-center">
-          <div class="hidden md:flex text-lg">
-            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
-              >Home</a
-            >
-            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
-              >Services</a
-            >
-            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
-              >About</a
-            >
-            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
-              >Contact</a
-            >
-            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
-              >FAQ</a
-            >
-            <router-link
-              :to="{ path: '/sign-in' }"
-              class="bg-purple-200 hover:bg-purple-300 rounded-full uppercase text-purple-700 py-3 px-6"
-              >Sign In</router-link
-            >
-          </div>
-          <!-- <div class="flex items-center ml-3">
+          <div v-if="hasLogin">
             <div>
               <button
                 type="button"
@@ -95,32 +73,46 @@
               </div>
               <ul class="py-1" role="none">
                 <li>
-                  <a
-                    href="#"
+                  <router-link
+                    :to="{ path: '/dashboard/user' }"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
-                    >Dashboard</a
-                  >
+                    >Thông tin doanh nghiệp
+                  </router-link>
                 </li>
                 <li>
                   <a
-                    href="#"
+                    @click="signOut"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
-                    >Settings</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem"
-                    >Sign out</a
+                    >Đăng xuất</a
                   >
                 </li>
               </ul>
             </div>
-          </div> -->
+          </div>
+          <div v-else class="md:flex text-lg">
+            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
+              >Home</a
+            >
+            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
+              >Services</a
+            >
+            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
+              >About</a
+            >
+            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
+              >Contact</a
+            >
+            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
+              >FAQ</a
+            >
+            <router-link
+              :to="{ path: '/sign-in' }"
+              class="bg-purple-200 hover:bg-purple-300 rounded-full uppercase text-purple-700 py-3 px-6"
+              >Sign In</router-link
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -129,12 +121,26 @@
 
 <script>
 import { Modal } from "flowbite";
+import { mapGetters } from "vuex";
+
 export default {
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
+  computed: {
+    ...mapGetters("auth", ["hasLogin"]),
+  },
   methods: {
     showProfileDropdown() {
       const ref = document.getElementById("dropdown-user");
       const modal = new Modal(ref);
       modal.show();
+    },
+    signOut() {
+      localStorage.removeItem("vuex");
+      this.$router.push({ path: "/" }).catch(() => {});
     },
   },
 };

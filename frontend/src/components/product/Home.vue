@@ -313,7 +313,7 @@
               </div>
               <button
                 type="submit"
-                @click="createDiary"
+                @click.prevent="createDiary"
                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Tạo sổ ghi chép
@@ -332,8 +332,10 @@ import Pagination from "../pagination/Pagination.vue";
 import ProductService from "../../services/ProductService";
 import DiaryService from "../../services/DiaryService";
 import ProductStatus from "../../enums/ProductStatus";
+import { useToast } from "vue-toastification";
 const productService = new ProductService();
 const diaryService = new DiaryService();
+const toast = useToast();
 
 export default {
   components: {
@@ -353,6 +355,7 @@ export default {
         createdAt: "2023-05-07T15:03:15.411Z",
         productId: 0,
       },
+      modal: null,
     };
   },
   async created() {
@@ -389,16 +392,17 @@ export default {
     },
     showCreateDiaryModal(id) {
       const ref = document.getElementById("create-diary-modal");
-      const modal = new Modal(ref);
-      modal.show();
-
+      this.modal = new Modal(ref);
+      this.modal.show();
       this.diary.productId = id;
     },
-    createDiary() {
-      const res = diaryService.create(this.diary);
+    async createDiary() {
+      const res = await diaryService.create(this.diary);
 
       if (res.status === 200) {
-        console.log("Tạo sổ ghi chép thành công");
+        toast.success("Tạo sổ ghi chép thành công");
+        this.modal.hide();
+        this.$router.push({ path: "/dashboard/diaries" });
       }
     },
   },

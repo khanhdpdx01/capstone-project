@@ -8,6 +8,10 @@ class DiaryService {
   detail(id) {
     return http.get(`/diaries/${id}`);
   }
+  
+  create(diary) {
+    return http.post("/diaries", diary);
+  }
 
   add(diary, images) {
     let formData = new FormData();

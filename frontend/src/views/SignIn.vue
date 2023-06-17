@@ -79,7 +79,7 @@
           >
         </div>
         <button
-          @click="login"
+          @click="doLogin"
           type="button"
           class="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
@@ -99,8 +99,9 @@
 </template>
 
 <script>
-import AuthService from "../services/AuthService";
-const authService = new AuthService();
+import { mapGetters, mapActions } from "vuex";
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 
 export default {
   data() {
@@ -111,12 +112,16 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters("auth", ["hasLogin"]),
+  },
   methods: {
-    async login() {
-      const res = await authService.login(this.data);
+    ...mapActions("auth", ["login"]),
+    async doLogin() {
+      await this.login(this.data);
 
-      if (res.status === 200) {
-        localStorage.setItem("access_token", res.data.accessToken);
+      if (this.hasLogin) {
+        toast.success('Đăng nhập thành công');
         this.$router.push({ path: "/dashboard/home" });
       }
     },

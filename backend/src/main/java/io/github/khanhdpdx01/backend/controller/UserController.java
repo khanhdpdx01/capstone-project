@@ -31,4 +31,11 @@ public class UserController {
 
         return ResponseEntity.status(200).body(registered);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
+        User user = userService.getUser(id);
+
+        return ResponseEntity.status(200).body(user);
+    }
 }

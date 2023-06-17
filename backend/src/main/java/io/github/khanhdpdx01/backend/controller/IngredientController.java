@@ -33,7 +33,7 @@ public class IngredientController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER') or hasRole('ROLE_REPRESENTATIVE')")
     public ResponseEntity<?> getAllWithPaging(@Valid PaginationParams params) {
         Page<Ingredient> ingredientPage = ingredientService.getAllWithPaging(
                 params.getPage(),
@@ -46,14 +46,14 @@ public class IngredientController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER') or hasRole('ROLE_REPRESENTATIVE')")
     public ResponseEntity<?> getDetail(@PathVariable("id") Long id) {
         Ingredient ingredient = ingredientService.getDetail(id);
         return ResponseEntity.status(HttpStatus.OK).body(ingredient);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PARTNER') or hasRole('ROLE_REPRESENTATIVE')")
     public ResponseEntity<?> createOrUpdate(@RequestPart("ingredient") IngredientDto ingredientDto,
                                             @RequestPart("certificates") List<MultipartFile> certificates,
                                             @RequestPart("images") List<MultipartFile> images) {

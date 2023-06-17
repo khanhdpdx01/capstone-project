@@ -57,7 +57,6 @@
             Chi tiết sổ ghi chép
           </h1>
         </div>
-        
       </div>
     </div>
     <div class="flex flex-row bg-white">
@@ -251,8 +250,10 @@ import IngredientService from "../../services/IngredientService";
 import DiaryService from "../../services/DiaryService";
 import FileUpload from "../file/FileUpload.vue";
 import DiaryStep from "../../enums/DiaryStep";
+import { useToast } from "vue-toastification";
 const ingredientService = new IngredientService();
 const diaryService = new DiaryService();
+const toast = useToast();
 
 export default {
   components: {
@@ -272,9 +273,7 @@ export default {
     };
   },
   async created() {
-    const id = this.$route.params.id;
-    this.newDiary.diaryId = id;
-    await Promise.all([this.getDetailDiary(id), this.getAllIngredients()]);
+    await this.load();
   },
   methods: {
     async getAllIngredients() {
@@ -302,7 +301,10 @@ export default {
       const res = await diaryService.add(this.newDiary, imageBlobs);
 
       if (res.status === 200) {
+        toast.success("Thêm nhật ký sản xuất thành công!");
         localStorage.removeItem("images");
+        await this.load();
+        this.clearInput();
       }
     },
     async getDetailDiary(id) {
@@ -314,6 +316,20 @@ export default {
     },
     getStep(step) {
       return DiaryStep[step];
+    },
+    async load() {
+      const id = this.$route.params.id;
+      this.newDiary.diaryId = id;
+      await Promise.all([this.getDetailDiary(id), this.getAllIngredients()]);
+    },
+    clearInput() {
+      this.newDiary = {
+        step: "",
+        description: "",
+        createdAt: "2023-05-07T15:13:50.993Z",
+        diaryId: 0,
+        ingredientId: 0,
+      };
     },
   },
 };

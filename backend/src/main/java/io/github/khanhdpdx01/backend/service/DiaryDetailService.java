@@ -2,6 +2,8 @@ package io.github.khanhdpdx01.backend.service;
 
 import io.github.khanhdpdx01.backend.dto.diary_detail.DiaryDetailDto;
 import io.github.khanhdpdx01.backend.entity.DiaryDetail;
+import io.github.khanhdpdx01.backend.entity.DiaryStatus;
+import io.github.khanhdpdx01.backend.entity.DiaryStep;
 import io.github.khanhdpdx01.backend.entity.User;
 import io.github.khanhdpdx01.backend.mapper.DiaryDetailMapper;
 import io.github.khanhdpdx01.backend.repository.DiaryDetailRepository;
@@ -25,12 +27,13 @@ public class DiaryDetailService {
     private static final Logger logger = LoggerFactory.getLogger(PartnerService.class);
     private final AuthenticationFacade authenticationFacade;
     private final DiaryDetailRepository diaryDetailRepository;
-
+    private final DiaryService diaryService;
     @Value("${storage.file.directory}")
     private String fileDirectory;
 
-    public DiaryDetailService(AuthenticationFacade authenticationFacade, DiaryDetailRepository diaryDetailRepository) {
+    public DiaryDetailService(AuthenticationFacade authenticationFacade, DiaryService diaryService, DiaryDetailRepository diaryDetailRepository) {
         this.authenticationFacade = authenticationFacade;
+        this.diaryService = diaryService;
         this.diaryDetailRepository = diaryDetailRepository;
     }
 
@@ -56,6 +59,18 @@ public class DiaryDetailService {
 
         DiaryDetail newDiaryDetail = diaryDetailRepository.save(diaryDetail);
         logger.info("Create diary detail success: " + diaryDetail.getId());
+
+        // update diary status
+        DiaryStatus status = diaryService.getDiaryStatus(diaryDetailDto.getDiaryId());
+        if (DiaryStatus.OPENING.equals(status)) {
+            diaryService.updateDiaryStatus(diaryDetailDto.getDiaryId(), DiaryStatus.IN_PRODUCTION);
+            logger.info("Update diary status success: " + diaryDetail.getId());
+        }
+
+        if (DiaryStep.HARVESTING.equals(diaryDetailDto.getStep())) {
+            diaryService.updateDiaryStatus(diaryDetailDto.getDiaryId(), DiaryStatus.CLOSED);
+            logger.info("Update diary status success: " + diaryDetail.getId());
+        }
 
         return newDiaryDetail;
     }

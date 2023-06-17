@@ -29,6 +29,10 @@ const routes = [
         component: DashBoardHome,
       },
       {
+        path: "user",
+        component: () => import("../components/user/Home.vue"),
+      },
+      {
         path: "products",
         component: () => import("../components/product/Home.vue"),
       },
@@ -58,6 +62,10 @@ const routes = [
       },
       {
         path: "diaries/:id",
+        component: () => import("../components/diary/Detail.vue"),
+      },
+      {
+        path: "diaries/create/:id",
         component: () => import("../components/diary/Create.vue"),
       },
       {

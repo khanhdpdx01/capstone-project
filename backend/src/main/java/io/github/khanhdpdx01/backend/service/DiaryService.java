@@ -3,6 +3,7 @@ package io.github.khanhdpdx01.backend.service;
 import io.github.khanhdpdx01.backend.dto.diary.DiaryDto;
 import io.github.khanhdpdx01.backend.entity.Diary;
 import io.github.khanhdpdx01.backend.entity.DiaryDetail;
+import io.github.khanhdpdx01.backend.entity.DiaryStatus;
 import io.github.khanhdpdx01.backend.entity.User;
 import io.github.khanhdpdx01.backend.exception.ApiRequestException;
 import io.github.khanhdpdx01.backend.mapper.DiaryMapper;
@@ -86,5 +87,20 @@ public class DiaryService {
         dto.setDiaryDetails(detailList);
 
         return dto;
+    }
+
+    public DiaryStatus getDiaryStatus(Long id) {
+        Diary diary = diaryRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException(DIARY_NOT_FOUND));
+
+        return diary.getStatus();
+    }
+
+    public void updateDiaryStatus(Long id, DiaryStatus status) {
+        Diary diary = diaryRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException(DIARY_NOT_FOUND));
+
+        diary.setStatus(status);
+        diaryRepository.save(diary);
     }
 }

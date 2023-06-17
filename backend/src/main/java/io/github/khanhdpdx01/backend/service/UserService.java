@@ -118,10 +118,17 @@ public class UserService {
         String accessToken = jwtTokenUtil.generateToken(user);
 
         JwtResponse jwtResponse = new JwtResponse();
+        jwtResponse.setUserId(user.getUserId());
         jwtResponse.setRole(user.getRole());
         jwtResponse.setUsername(user.getUsername());
         jwtResponse.setAccessToken(accessToken);
 
         return jwtResponse;
+    }
+
+    public User getUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User is not found"));
+        return user;
     }
 }

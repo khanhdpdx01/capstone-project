@@ -21,5 +21,10 @@ public class User {
     @JsonIgnore
     private String password;
     private String role;
+    private String address;
+    private String phoneNumber;
+    private String email;
+    private String website;
+    private String description;
     private boolean isActive;
 }

@@ -171,6 +171,8 @@
 <script>
 import IngredientService from "../../services/IngredientService";
 import FileUpload from "../file/FileUpload.vue";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 const ingredientService = new IngredientService();
 
 export default {
@@ -239,13 +241,34 @@ export default {
       if (this.id === undefined) {
         // eslint-disable-next-line no-unused-vars
         const { id: _, ...ingredientObj } = this.ingredient;
-        ingredientService.add(ingredientObj, imageBlobs, certificateBlobs);
-      } else {
-        ingredientService.add(this.ingredient, imageBlobs, certificateBlobs);
-      }
+        const res = await ingredientService.add(
+          ingredientObj,
+          imageBlobs,
+          certificateBlobs
+        );
 
-      localStorage.removeItem("images");
-      localStorage.removeItem("certificates");
+        if (res.status === 200) {
+          toast.success("Tạo nguyên liệu thành công!");
+          this.$router.push({ path: "/dashboard/ingredients" });
+          localStorage.removeItem("images");
+          localStorage.removeItem("certificates");
+        }
+      } else {
+        const res = await ingredientService.add(
+          this.ingredient,
+          imageBlobs,
+          certificateBlobs
+        );
+
+        if (res.status === 200) {
+          toast.success("Cập nhật nguyên liệu thành công!");
+          this.$router.push({ path: "/dashboard/ingredients" });
+          localStorage.removeItem("images");
+          localStorage.removeItem("certificates");
+        }
+
+        toast.error("Có lỗi hê thống. Xin vui lòng thử lại!");
+      }
     },
   },
 };
