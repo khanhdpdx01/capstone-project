@@ -8,8 +8,13 @@ import io.github.khanhdpdx01.backend.entity.StampType;
 import io.github.khanhdpdx01.backend.mapper.PackageMapper;
 import io.github.khanhdpdx01.backend.repository.PackageRepository;
 import io.github.khanhdpdx01.backend.repository.StampRepository;
+import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -63,5 +68,19 @@ public class PackageService {
         stampRepository.saveAll(stamps);
 
         logger.info("Create stamp success");
+    }
+
+    public Page<PackageProduct> getAllWithPaging(int page, int size, String[] sort, String keyword) {
+        Pageable pageable = PaginationAndSortUtil.create(page, size, sort);
+
+        Page<PackageProduct> pageRoom;
+
+        if (keyword == null || StringUtils.isBlank(keyword)) {
+            pageRoom = packageRepository.findAll(pageable);
+        } else {
+            pageRoom = packageRepository.search(keyword, pageable);
+        }
+
+        return new PageImpl<>(pageRoom.getContent(), pageable, pageRoom.getTotalElements());
     }
 }

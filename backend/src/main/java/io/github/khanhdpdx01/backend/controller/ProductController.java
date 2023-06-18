@@ -26,6 +26,12 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping("/get-all-without-paging")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
+    public ResponseEntity<?> getAllWithPaging() {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getAllWithoutPaging());
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
     public ResponseEntity<?> getAllWithPaging(@Valid PaginationParams params) {

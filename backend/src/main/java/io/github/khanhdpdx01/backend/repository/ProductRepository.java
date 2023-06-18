@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p from Product p " +
             "where (:userId is NULL OR p.rawMaterial.representative.id = :userId ) " +
@@ -16,4 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p from Product p " +
             "where p.rawMaterial.representative.id = :userId ")
     Page<Product> findAll(@Param("userId") Long userId, Pageable pageable);
+
+    @Query("SELECT p from Product p " +
+            "where p.rawMaterial.representative.id = :userId ")
+    List<Product> findAllWithoutPaging(@Param("userId") Long userId);
 }

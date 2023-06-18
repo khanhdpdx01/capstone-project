@@ -123,4 +123,9 @@ public class ProductService {
 
         return new PageImpl<>(pageRoom.getContent(), pageable, pageRoom.getTotalElements());
     }
+
+    public Object getAllWithoutPaging() {
+        Long userId = authenticationFacade.getUserId();
+        return productRepository.findAllWithoutPaging(userId);
+    }
 }

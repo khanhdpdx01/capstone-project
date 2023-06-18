@@ -75,7 +75,7 @@
             </form>
           </div>
           <button
-            @click="showCreateStampModal"
+            @click="createPackaging"
             id="createProductButton"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
             type="button"
@@ -85,142 +85,202 @@
         </div>
       </div>
     </div>
-    <div
-      id="create-stamp-modal"
-      tabindex="-1"
-      aria-hidden="true"
-      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
-    >
-      <div class="relative w-full max-w-md max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-          <button
-            type="button"
-            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-          >
-            <svg
-              aria-hidden="true"
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+    <div class="flex flex-col">
+      <div class="overflow-x-auto">
+        <div class="inline-block min-w-full align-middle">
+          <div class="overflow-hidden shadow">
+            <table
+              class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600"
             >
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <span class="sr-only">Close modal</span>
-          </button>
-          <div class="px-6 py-6 lg:px-8">
-            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-              Thêm mới tem
-            </h3>
-            <form class="space-y-6" prevent.submit>
-              <div>
-                <label
-                  for="category"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Thể loại</label
-                >
-                <select
-                  id="category"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                >
-                  <option value="" selected>Loại tem</option>
-                  <option value="PRODUCT">Tem sản phẩm</option>
-                  <option value="CARTON">Tem thùng</option>
-                  <option value="BATCH">Tem lô</option>
-                </select>
-              </div>
-              <div>
-                <label
-                  for="name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Số lượng</label
-                >
-                <input
-                  type="text"
-                  name="number"
-                  v-model="stamp.quantity"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  placeholder=""
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  for="name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Tiền tố</label
-                >
-                <input
-                  type="text"
-                  name="name"
-                  v-model="stamp.prefix"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  placeholder=""
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  for="name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Số lượt tối đa có thể quét</label
-                >
-                <input
-                  type="number"
-                  name="name"
-                  v-model="stamp.maxScanTimes"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  placeholder=""
-                  required
-                />
-              </div>
-              <button
-                type="button"
-                @click="createStamp"
-                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              <thead class="bg-gray-100 dark:bg-gray-700">
+                <tr>
+                  <th scope="col" class="p-4">
+                    <div class="flex items-center">
+                      <input
+                        id="checkbox-all"
+                        aria-describedby="checkbox-1"
+                        type="checkbox"
+                        class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label for="checkbox-all" class="sr-only">checkbox</label>
+                    </div>
+                  </th>
+                  <th
+                    scope="col"
+                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
+                  >
+                    Mã sản phẩm
+                  </th>
+                  <th
+                    scope="col"
+                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
+                  >
+                    Tên sản phẩm đóng gói
+                  </th>
+                  <th
+                    scope="col"
+                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
+                  >
+                   Sản phẩm thành phần
+                  </th>
+                  <th
+                    scope="col"
+                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
+                  >
+                    Số lượng
+                  </th>
+                  <th
+                    scope="col"
+                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
+                  >
+                    Hành động
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
               >
-                Hoàn thành
-              </button>
-            </form>
+                <tr
+                  class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                  v-for="(packageDto, index) in packages"
+                  :key="index"
+                >
+                  <td class="w-4 p-4">
+                    <div class="flex items-center">
+                      <input
+                        id="checkbox-{{ .id }}"
+                        aria-describedby="checkbox-1"
+                        type="checkbox"
+                        class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label for="checkbox-{{ .id }}" class="sr-only"
+                        >checkbox</label
+                      >
+                    </div>
+                  </td>
+                  <td
+                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {{ packageDto.sku }}
+                  </td>
+                  <td
+                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {{ packageDto.productName }}
+                  </td>
+                  <td
+                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {{ packageDto.product.name }}
+                  </td>
+                  <td
+                    class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"
+                  >
+                    {{ packageDto.quantity }} {{ packageDto.basicUnit }}
+                  </td>
+                  <td class="p-4 space-x-2 whitespace-nowrap">
+                    <button
+                      type="button"
+                      id="updateProductButton"
+                      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                      <svg
+                        class="w-4 h-4 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                        ></path>
+                        <path
+                          fill-rule="evenodd"
+                          d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      Cập nhật
+                    </button>
+                    <button
+                      type="button"
+                      id="deleteProductButton"
+                      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
+                    >
+                      <svg
+                        class="w-4 h-4 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      Xóa
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+    </div>
+
+    <div
+      class="sticky bottom-0 right-0 w-full p-4 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <pagination
+        :total-pages="page.totalPages"
+        :current-page="page.currentPage"
+        @pagechanged="onPageChange"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { Modal } from "flowbite";
-import StampService from "../../services/StampService";
-const stampService = new StampService();
+import PackageService from "../../services/PackageService";
+const packageService = new PackageService();
 
 export default {
   data() {
     return {
-      stamp: {
-        maxScanTimes: 10,
-        type: "PRODUCT",
-        prefix: "ITA",
-        quantity: 100,
+      page: {
+        totalPages: 1,
+        totalItems: window.VUE_APP_TOTAL_ITEMS,
+        currentPage: 1,
       },
+      packages: []
     };
   },
+  async created() {
+    await this.getAll();
+  },
   methods: {
-    showCreateStampModal() {
-      const ref = document.getElementById("create-stamp-modal");
-      const modal = new Modal(ref);
-      modal.show();
+    createPackaging() {
+      this.$router.push({ path: "/dashboard/packages/create" });
     },
-    async createStamp() {
-      const res = await stampService.add(this.stamp);
+    async onPageChange(page) {
+      this.page.currentPage = page;
+      this.getAll();
+    },
+    async getAll() {
+      const res = await packageService.getAll({
+        params: {
+          page: this.page.currentPage,
+          size: this.page.totalItems,
+        },
+      });
+      console.log(res.data);
 
-      if(res.status === 200) {
-        console.log("Success");
+      if (res.status === 200) {
+        const { data, currentPage, totalPages } = res.data;
+        this.page.totalPages = totalPages;
+        this.page.currentPage = currentPage;
+        this.packages = data;
       }
     },
   },

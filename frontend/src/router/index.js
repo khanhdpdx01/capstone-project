@@ -72,6 +72,10 @@ const routes = [
         path: "stamps",
         component: () => import("../components/stamp/Home.vue"),
       },
+      {
+        path: "packages/create",
+        component: () => import("../components/stamp/Create.vue"),
+      },
     ],
   },
 ];

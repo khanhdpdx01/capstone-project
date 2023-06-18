@@ -29,9 +29,11 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "flowbite-datepicker": "^1.2.2",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
     "vue-cli-plugin-tailwind": "~3.0.0",
+    "vue-multiselect": "^3.0.0-beta.2",
     "vuex-persistedstate": "^4.1.0"
   },
   "eslintConfig": {

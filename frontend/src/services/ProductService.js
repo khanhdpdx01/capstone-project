@@ -4,6 +4,9 @@ class ProductService {
   getAll(params) {
     return http.get("/products", params);
   }
+  getAllWithoutPaging() {
+    return http.get("/products/get-all-without-paging");
+  }
   add(ingredient, images, certificates) {
     let formData = new FormData();
     const blob = new Blob([JSON.stringify(ingredient)], {

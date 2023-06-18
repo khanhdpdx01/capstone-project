@@ -1,8 +1,6 @@
 package io.github.khanhdpdx01.backend.controller;
 
-import io.github.khanhdpdx01.backend.dto.diary.DiaryDto;
 import io.github.khanhdpdx01.backend.dto.diary_detail.DiaryDetailDto;
-import io.github.khanhdpdx01.backend.entity.Diary;
 import io.github.khanhdpdx01.backend.entity.DiaryDetail;
 import io.github.khanhdpdx01.backend.service.DiaryDetailService;
 import org.springframework.http.HttpStatus;
