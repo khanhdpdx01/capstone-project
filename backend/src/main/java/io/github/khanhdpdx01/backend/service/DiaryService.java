@@ -1,17 +1,16 @@
 package io.github.khanhdpdx01.backend.service;
 
 import io.github.khanhdpdx01.backend.dto.diary.DiaryDto;
-import io.github.khanhdpdx01.backend.entity.Diary;
-import io.github.khanhdpdx01.backend.entity.DiaryDetail;
-import io.github.khanhdpdx01.backend.entity.DiaryStatus;
-import io.github.khanhdpdx01.backend.entity.User;
+import io.github.khanhdpdx01.backend.entity.*;
 import io.github.khanhdpdx01.backend.exception.ApiRequestException;
 import io.github.khanhdpdx01.backend.mapper.DiaryMapper;
 import io.github.khanhdpdx01.backend.repository.DiaryDetailRepository;
 import io.github.khanhdpdx01.backend.repository.DiaryRepository;
+import io.github.khanhdpdx01.backend.repository.ProductRepository;
 import io.github.khanhdpdx01.backend.security.AuthenticationFacade;
 import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.hyperledger.fabric.gateway.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,14 +31,19 @@ public class DiaryService {
     private final AuthenticationFacade authenticationFacade;
     private final DiaryRepository diaryRepository;
     private final DiaryDetailRepository diaryDetailRepository;
+    private final ProductRepository productRepository;
+
+    private final ChaincodeService chaincodeService;
 
     @Value("${diary.not-found}")
     private String DIARY_NOT_FOUND;
 
-    public DiaryService(AuthenticationFacade authenticationFacade, DiaryRepository diaryRepository, DiaryDetailRepository diaryDetailRepository) {
+    public DiaryService(AuthenticationFacade authenticationFacade, DiaryRepository diaryRepository, DiaryDetailRepository diaryDetailRepository, ProductRepository productRepository, ChaincodeService chaincodeService) {
         this.authenticationFacade = authenticationFacade;
         this.diaryRepository = diaryRepository;
         this.diaryDetailRepository = diaryDetailRepository;
+        this.productRepository = productRepository;
+        this.chaincodeService = chaincodeService;
     }
 
     public Diary create(DiaryDto diaryDto) {
@@ -50,6 +54,25 @@ public class DiaryService {
 
         Diary newDiary = diaryRepository.save(diary);
         logger.info("Create diary success: " + newDiary.getId());
+
+        // get product name
+        Product product = productRepository.findById(diary.getProduct().getId())
+                .orElseThrow(() -> new ApiRequestException("Product not found"));
+
+        // upload to blockchain
+        try {
+            Transaction transaction = chaincodeService.createTransaction("CreateDiary");
+            byte[] res = transaction.submit(Long.toString(newDiary.getId()),
+                    newDiary.getName(),
+                    product.getName(),
+                    newDiary.getStatus().name());
+
+            String transactionId = transaction.getTransactionId();
+            diaryRepository.updateTransactionId(newDiary.getId(), transactionId);
+            logger.info("Updating transaction is success: " + newDiary.getId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         return newDiary;
     }

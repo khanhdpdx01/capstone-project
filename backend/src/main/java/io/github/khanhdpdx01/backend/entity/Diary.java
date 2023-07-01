@@ -18,6 +18,7 @@ public class Diary {
     @Enumerated(EnumType.ORDINAL)
     private DiaryStatus status;
     private Timestamp createdAt;
+    private String transactionId;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

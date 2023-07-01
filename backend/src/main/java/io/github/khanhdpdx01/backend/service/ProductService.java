@@ -9,7 +9,6 @@ import io.github.khanhdpdx01.backend.repository.ProductRepository;
 import io.github.khanhdpdx01.backend.security.AuthenticationFacade;
 import io.github.khanhdpdx01.backend.util.FileUtil;
 import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;
-import io.github.khanhdpdx01.backend.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +20,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static io.github.khanhdpdx01.backend.common.AppConstant.ADMIN;
 
@@ -60,24 +58,37 @@ public class ProductService {
             getDetail(productDto.getId());
         }
 
-        Path path = Paths.get(fileDirectory, Long.toString(authenticationFacade.getUserId()));
-        try {
-            Files.createDirectories(path);
-        } catch (IOException e) {
-            logger.error("Create directory not success: ", path);
-        }
-
-        for (MultipartFile certificate : certificates) {
-            FileUtil.save(path, certificate);
-        }
-
-        for (MultipartFile image : images) {
-            FileUtil.save(path, image);
-        }
-
         Product product = ProductMapper.INSTANCE.dtoToEntity(productDto);
-        product.setCertificatePath(StringUtil.join(FileUtil.getFilenameArray(certificates)));
-        product.setImagePath(StringUtil.join(FileUtil.getFilenameArray(images)));
+
+        if (images.size() > 0) {
+            List<String> imgListAsStr =
+                    images
+                            .stream()
+                            .map(image -> UUID.randomUUID().toString())
+                            .collect(Collectors.toList());
+
+            int i = 0;
+            for (; i < imgListAsStr.size(); ++i) {
+                FileUtil.save(Paths.get(fileDirectory, imgListAsStr.get(i)), images.get(i));
+            }
+
+            product.setImagePath(imgListAsStr.stream().collect(Collectors.joining()));
+        }
+
+        if (certificates.size() > 0) {
+            List<String> certificateListAsStr =
+                    certificates
+                            .stream()
+                            .map(certificate -> UUID.randomUUID().toString())
+                            .collect(Collectors.toList());
+
+            int i = 0;
+            for (; i < certificateListAsStr.size(); ++i) {
+                FileUtil.save(Paths.get(fileDirectory, certificateListAsStr.get(i)), certificates.get(i));
+            }
+
+            product.setCertificatePath(certificateListAsStr.stream().collect(Collectors.joining()));
+        }
 
         if (productDto.getId() == null) {
             User createdBy = new User();

@@ -1,5 +1,6 @@
 package io.github.khanhdpdx01.backend.controller;
 
+import io.github.khanhdpdx01.backend.dto.trace.TraceDto;
 import io.github.khanhdpdx01.backend.service.TraceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class TraceController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
-    public ResponseEntity<?> doPackage(@PathVariable Long id) {
-        traceService.trace(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Success");
+    public ResponseEntity<?> doPackage(@PathVariable("id") String id) {
+        TraceDto dto = traceService.trace(id);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 }

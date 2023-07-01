@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  be:  
+    image: khanhdpdx01/capstone-project:1.0
+    restart: always                    
+    build:
+      context: ./backend
+    environment:
+      - SPRING_PROFILE_ACTIVE=prod
+      - SERVER_PORT=3000
+      - DB_HOST=localhost
+      - DB_PORT=3307
+      - DB_NAME=demo
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - FABRIC_CHANNEL_NAME=mychannel
+      - FABRIC_CHAINCODE_NAME=chaincode
+      - STORAGE_FILE_DIRECTORY=/root
+    ports:                              
+      - "3000:3000" 
+
+  fe:                         
+    image: khanhdpdx01/capstone-project:1.0
+    restart: always  
+    build:
+      context: ./frontend                
+    environment:
+    - VUE_APP_SERVICE_ENDPOINT=http://localhost:3000
+    - VUE_APP_IPFS_ENDPOINT=http://localhost:8080
+    - VUE_APP_EXPLORER_ENDPOINT=http://10.30.176.54:31898
+    - VUE_APP_TOTAL_ITEMS=10
+    ports:
+      - "8000:80"     
+    depends_on: 
+      - be
+  

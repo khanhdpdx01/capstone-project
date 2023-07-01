@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class FileUtil {
     public static void save(Path fileDirectory, MultipartFile file) {
         try {
-            Files.write(fileDirectory.resolve(file.getOriginalFilename()), file.getBytes());
+            Files.write(fileDirectory, file.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -8,17 +8,23 @@ import io.github.khanhdpdx01.backend.entity.StampType;
 import io.github.khanhdpdx01.backend.mapper.PackageMapper;
 import io.github.khanhdpdx01.backend.repository.PackageRepository;
 import io.github.khanhdpdx01.backend.repository.StampRepository;
+import io.github.khanhdpdx01.backend.util.FileUtil;
 import io.github.khanhdpdx01.backend.util.PaginationAndSortUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PackageService {
@@ -26,14 +32,33 @@ public class PackageService {
     private final StampRepository stampRepository;
     private final PackageRepository packageRepository;
 
+    @Value("${storage.file.directory}")
+    private String fileDirectory;
+
     public PackageService(StampRepository stampRepository, PackageRepository packageRepository) {
         this.stampRepository = stampRepository;
         this.packageRepository = packageRepository;
     }
 
-    public void doPackage(PackageDto packageDto) {
+    public void doPackage(PackageDto packageDto, List<MultipartFile> images) {
         // create packing
         PackageProduct packageProduct = PackageMapper.INSTANCE.dtoToEntity(packageDto);
+
+        if (images.size() > 0) {
+            List<String> imgListAsStr =
+                    images
+                            .stream()
+                            .map(image -> UUID.randomUUID().toString())
+                            .collect(Collectors.toList());
+
+            int i = 0;
+            for (; i < imgListAsStr.size(); ++i) {
+                FileUtil.save(Paths.get(fileDirectory, imgListAsStr.get(i)), images.get(i));
+            }
+
+            packageProduct.setImagePath(imgListAsStr.stream().collect(Collectors.joining()));
+        }
+
         PackageProduct newPackageProduct = packageRepository.save(packageProduct);
         logger.info("Packing success");
 
@@ -79,6 +104,25 @@ public class PackageService {
             pageRoom = packageRepository.findAll(pageable);
         } else {
             pageRoom = packageRepository.search(keyword, pageable);
+        }
+
+        return new PageImpl<>(pageRoom.getContent(), pageable, pageRoom.getTotalElements());
+    }
+
+    public PackageProduct detail(String sku) {
+        PackageProduct packageProduct = packageRepository.findById(sku)
+                .orElseThrow(() -> new RuntimeException("Package product not found"));
+
+        return packageProduct;
+    }
+
+    public Page<Stamp> getListStampBySku(String sku, int page, int size, String[] sort, String keyword) {
+        Pageable pageable = PaginationAndSortUtil.create(page, size, sort);
+
+        Page<Stamp> pageRoom = null;
+
+        if (keyword == null || StringUtils.isBlank(keyword)) {
+            pageRoom = stampRepository.findAllBySku(sku, pageable);
         }
 
         return new PageImpl<>(pageRoom.getContent(), pageable, pageRoom.getTotalElements());

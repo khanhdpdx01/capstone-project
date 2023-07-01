@@ -24,6 +24,7 @@ public class PackageProduct {
     private String conversionValue;
     private String address;
     private String createdBy;
+    private String imagePath;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

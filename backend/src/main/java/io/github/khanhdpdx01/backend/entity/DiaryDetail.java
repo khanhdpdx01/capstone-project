@@ -19,6 +19,7 @@ public class DiaryDetail {
     private String description;
     private String imagePath;
     private Timestamp createdAt;
+    private String transactionId;
 
     @ManyToOne
     @JoinColumn(name = "diary_id")
@@ -28,7 +29,7 @@ public class DiaryDetail {
     @JoinColumn(name = "created_by")
     private User createdBy;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 }

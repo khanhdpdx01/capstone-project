@@ -2,11 +2,9 @@ package io.github.khanhdpdx01.backend.service;
 
 
 import io.github.khanhdpdx01.backend.dto.raw_material.RawMaterialDto;
-import io.github.khanhdpdx01.backend.entity.Ingredient;
 import io.github.khanhdpdx01.backend.entity.RawMaterial;
 import io.github.khanhdpdx01.backend.entity.User;
 import io.github.khanhdpdx01.backend.exception.ApiRequestException;
-import io.github.khanhdpdx01.backend.mapper.IngredientMapper;
 import io.github.khanhdpdx01.backend.mapper.RawMaterialMapper;
 import io.github.khanhdpdx01.backend.repository.RawMaterialRepository;
 import io.github.khanhdpdx01.backend.security.AuthenticationFacade;
@@ -55,21 +53,6 @@ public class RawMaterialService {
             getDetail(rawMaterialDto.getId());
         }
 
-        Path path = Paths.get(fileDirectory, Long.toString(authenticationFacade.getUserId()));
-        try {
-            Files.createDirectories(path);
-        } catch (IOException e) {
-            logger.error("Create directory not success: ", path);
-        }
-
-        for (MultipartFile certificate : certificates) {
-            FileUtil.save(path, certificate);
-        }
-
-        for (MultipartFile image : images) {
-            FileUtil.save(path, image);
-        }
-
         RawMaterial rawMaterial = RawMaterialMapper.INSTANCE.dtoToEntity(rawMaterialDto);
         rawMaterial.setCertificatePath(StringUtil.join(FileUtil.getFilenameArray(certificates)));
         rawMaterial.setImagePath(StringUtil.join(FileUtil.getFilenameArray(images)));
@@ -85,6 +68,21 @@ public class RawMaterialService {
         }
 
         RawMaterial returnedRawMaterial = rawMaterialRepository.save(rawMaterial);
+
+        Path path = Paths.get(fileDirectory, "raw_material", Long.toString(returnedRawMaterial.getId()));
+        try {
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            logger.error("Create directory not success: ", path);
+        }
+
+        for (MultipartFile certificate : certificates) {
+            FileUtil.save(path, certificate);
+        }
+
+        for (MultipartFile image : images) {
+            FileUtil.save(path, image);
+        }
 
         if (rawMaterialDto.getId() == null) {
             logger.info("Raw material create success: " + rawMaterial.getId());
