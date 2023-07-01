@@ -292,6 +292,14 @@
           Hoàn thành
         </button>
       </form>
+      <div class="pb-4">
+        <label
+          for="name"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Hình ảnh</label
+        >
+        <FileUpload name="images" />
+      </div>
     </div>
   </div>
 </template>
@@ -302,11 +310,15 @@ import Datepicker from "flowbite-datepicker/Datepicker";
 import Multiselect from "vue-multiselect";
 import PackageService from "../../services/PackageService";
 import ProductService from "../../services/ProductService";
+import FileUpload from "../file/FileUpload.vue";
+import { useToast } from "vue-toastification";
 const packageService = new PackageService();
 const productService = new ProductService();
+const toast = useToast();
 
 export default {
   components: {
+    FileUpload,
     Multiselect,
   },
   data() {
@@ -363,10 +375,24 @@ export default {
       this.packageDto.expiryDate = this.convertDate(this.expiryDateEl.value);
       this.packageDto.productId = this.value.id;
 
-      const res = await packageService.add(this.packageDto);
+      const images = JSON.parse(localStorage.getItem("images"));
+
+      const imageBlobs = await Promise.all(
+        images.map(async (image) => {
+          // get blob from blob url
+          let blob = await fetch(image.url).then((r) => r.blob());
+
+          // convert blob to file object
+          const file = new File([blob], image.name, { type: image.type });
+          return file;
+        })
+      );
+
+      const res = await packageService.add(this.packageDto, imageBlobs);
 
       if (res.status === 200) {
-        console.log("Success");
+        toast.success("Tạo lô hàng thành công");
+        localStorage.removeItem("images");
       }
     },
     convertDate(date) {

@@ -20,6 +20,10 @@ const routes = [
     component: () => import("../views/SignUp.vue"),
   },
   {
+    path: "/trace/:id",
+    component: () => import("../components/stamp/Trace.vue"),
+  },
+  {
     path: "/dashboard",
     name: "DashBoard",
     component: DashBoard,
@@ -75,6 +79,10 @@ const routes = [
       {
         path: "packages/create",
         component: () => import("../components/stamp/Create.vue"),
+      },
+      {
+        path: "packages/:id",
+        component: () => import("../components/stamp/Detail.vue"),
       },
     ],
   },

@@ -286,7 +286,7 @@ export default {
         this.products = data;
       }
     },
-    addIngredient() {
+    addIngredient() { 
       this.$router.push({ path: "/dashboard/ingredients/create" });
     },
     updateIngredient(id) {

@@ -201,7 +201,7 @@
                       </svg>
                       Ghi chép
                     </button>
-                    <button
+                    <!-- <button
                       @click="updateProduct(product.id)"
                       type="button"
                       id="updateProductButton"
@@ -242,7 +242,7 @@
                         ></path>
                       </svg>
                       Xóa
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>

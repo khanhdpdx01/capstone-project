@@ -126,7 +126,7 @@
         </div>
         <button
           type="button"
-          @click="addproduct"
+          @click="addProduct"
           class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
         >
           Hoàn thành
@@ -139,6 +139,8 @@
 <script>
 import ProductService from "../../services/ProductService";
 import FileUpload from "../file/FileUpload.vue";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 const productService = new ProductService();
 
 export default {
@@ -148,15 +150,15 @@ export default {
   data() {
     return {
       product: {
-        id: 2,
-        name: "Gạo ST25",
-        gtinCode: "VN25",
-        description: "Gạo ST25 - gạo ngon số một thế giới năm 2019",
+        id: 0,
+        name: "",
+        gtinCode: "",
+        description: "",
         status: "IN_PRODUCTION",
         createdAt: "2023-05-07T10:26:04.163Z",
         updatedAt: "2023-05-08T09:19:41.616+00:00",
         rawMaterialId: 1,
-        createdBy: 3,
+        createdBy: 0,
       },
     };
   },
@@ -204,13 +206,32 @@ export default {
       if (this.id === undefined) {
         // eslint-disable-next-line no-unused-vars
         const { id: _, ...productObj } = this.product;
-        productService.add(productObj, imageBlobs, certificateBlobs);
-      } else {
-        productService.add(this.product, imageBlobs, certificateBlobs);
-      }
+        const res = await productService.add(
+          productObj,
+          imageBlobs,
+          certificateBlobs
+        );
 
-      localStorage.removeItem("images");
-      localStorage.removeItem("certificates");
+        if (res.status === 200) {
+          toast.success("Tạo sản phẩm thành công!");
+          this.$router.push({ path: "/dashboard/products" });
+          localStorage.removeItem("images");
+          localStorage.removeItem("certificates");
+        }
+      } else {
+        const res = await productService.add(
+          this.product,
+          imageBlobs,
+          certificateBlobs
+        );
+
+        if (res.status === 200) {
+          toast.success("Cập nhật sản phẩm thành công!");
+          this.$router.push({ path: "/dashboard/products" });
+          localStorage.removeItem("images");
+          localStorage.removeItem("certificates");
+        }
+      }
     },
   },
 };

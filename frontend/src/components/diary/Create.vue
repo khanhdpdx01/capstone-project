@@ -45,7 +45,7 @@
                   <a
                     href="#"
                     class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white"
-                    >Chi tiết sổ ghi chép</a
+                    >Viết ghi chép sản xuất</a
                   >
                 </div>
               </li>
@@ -54,61 +54,102 @@
           <h1
             class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
           >
-            Chi tiết sổ ghi chép
+            Viết ghi chép sản xuất
           </h1>
         </div>
       </div>
     </div>
     <div class="flex flex-row bg-white">
-      <aside id="sidebar-multi-level-sidebar" class="w-64" aria-label="Sidebar">
-        <div class="h-full px-3 py-4">
-          <!-- <ul class="space-y-2 font-medium">
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+      <section class="w-[50%] bg-white dark:bg-gray-900">
+        <div class="pt-4 mx-auto max-w-2xl">
+          <!-- <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+            Viết ghi chép sản xuất
+          </h2> -->
+          <form action="#">
+            <div class="grid gap-4">
+              <div class="w-full">
+                <label
+                  for="name"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Giai đoạn</label
+                >
+                <select
+                  id="category"
+                  v-model="newDiary.step"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                >
+                  <option selected=""></option>
+                  <option value="SOAK_SEED">Ngâm giống/Monitors</option>
+                  <option value="SEEDING">Gieo trồng</option>
+                  <option value="FERTILIZATION">Bón phân</option>
+                  <option value="TAKE_CART_OF">Chăm sóc</option>
+                  <option value="HARVESTING">Thu hoạch</option>
+                </select>
+              </div>
+              <div class="w-full">
+                <label
+                  for="name"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Nguyên liệu</label
+                >
+                <multiselect
+                  v-model="newDiary.ingredientId"
+                  :options="ingredients"
+                  label="name"
+                  track-by="name"
+                ></multiselect>
+                <!-- <select
+                  id="category"
+                  v-model="newDiary.ingredientId"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                >
+                  <option selected=""></option>
+                  <option
+                    v-for="(item, index) in ingredients"
+                    :key="index"
+                    :value="item.id"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select> -->
+              </div>
+              <div class="w-full mb-2">
+                <label
+                  for="description"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Ghi chú</label
+                >
+                <textarea
+                  id="description"
+                  rows="8"
+                  v-model="newDiary.description"
+                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Your description here"
+                ></textarea>
+              </div>
+            </div>
+            <div class="w-full">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Hình ảnh</label
               >
-                <span class="ml-3">Ngâm giống</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <span class="ml-3">Gieo hạt</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <span class="ml-3">Bón phân</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <span class="ml-3">Chăm sóc</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <span class="ml-3">Thu hoạch</span>
-              </a>
-            </li>
-          </ul> -->
+              <FileUpload name="images" />
+            </div>
+
+            <button
+              @click="createDetailDiary"
+              id="createProductButton"
+              class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              type="button"
+            >
+              Ghi chép
+            </button>
+          </form>
         </div>
-      </aside>
+      </section>
 
       <ol
-        class="relative bg-white border-l border-r border-gray-200 dark:border-gray-700 pr-4 w-[50%]"
+        class="relative bg-white border-l border-r border-gray-200 dark:border-gray-700 p-4 w-[50%]"
       >
         <li
           class="mb-10 ml-6"
@@ -147,100 +188,18 @@
             {{ item.description }}
           </p>
           <div
-            v-for="index in 3"
+            v-for="(hash, index) in item.imagePath.split(',')"
             style="width: 100px; height: 100px"
             class="relative mt-3 ml-3 border-2 shadow-xl rounded-md inline-block"
             :key="index"
           >
             <img
               class="object-cover w-full h-full"
-              src="https://co4la.vn/wp-content/uploads/2022/05/anh-dai-dien-co-4-la-1.jpg"
+              :src="`http://localhost:3000/files/${hash}`"
             />
           </div>
         </li>
       </ol>
-
-      <section class="w-[50%] bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-          <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-            Viết ghi chép sản xuất
-          </h2>
-          <form action="#">
-            <div class="grid gap-4">
-              <div class="w-full">
-                <label
-                  for="name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Giai đoạn</label
-                >
-                <select
-                  id="category"
-                  v-model="newDiary.step"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                >
-                  <option selected=""></option>
-                  <option value="SOAK_SEED">Ngâm giống/Monitors</option>
-                  <option value="SEEDING">Gieo trồng</option>
-                  <option value="FERTILIZATION">Bón phân</option>
-                  <option value="TAKE_CART_OF">Chăm sóc</option>
-                  <option value="HARVESTING">Thu hoạch</option>
-                </select>
-              </div>
-              <div class="w-full">
-                <label
-                  for="name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Nguyên liệu</label
-                >
-                <select
-                  id="category"
-                  v-model="newDiary.ingredientId"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                >
-                  <option selected=""></option>
-                  <option
-                    v-for="(item, index) in ingredients"
-                    :key="index"
-                    :value="item.id"
-                  >
-                    {{ item.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="w-full mb-2">
-                <label
-                  for="description"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Ghi chú</label
-                >
-                <textarea
-                  id="description"
-                  rows="8"
-                  v-model="newDiary.description"
-                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Your description here"
-                ></textarea>
-              </div>
-            </div>
-            <div class="w-full">
-              <label
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Hình ảnh</label
-              >
-              <FileUpload name="images" />
-            </div>
-
-            <button
-              @click="createDetailDiary"
-              id="createProductButton"
-              class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              type="button"
-            >
-              Ghi chép
-            </button>
-          </form>
-        </div>
-      </section>
     </div>
   </div>
 </template>
@@ -250,6 +209,7 @@ import IngredientService from "../../services/IngredientService";
 import DiaryService from "../../services/DiaryService";
 import FileUpload from "../file/FileUpload.vue";
 import DiaryStep from "../../enums/DiaryStep";
+import Multiselect from "vue-multiselect";
 import { useToast } from "vue-toastification";
 const ingredientService = new IngredientService();
 const diaryService = new DiaryService();
@@ -258,6 +218,7 @@ const toast = useToast();
 export default {
   components: {
     FileUpload,
+    Multiselect,
   },
   data() {
     return {
@@ -285,6 +246,7 @@ export default {
       }
     },
     async createDetailDiary() {
+      this.newDiary.ingredientId = this.newDiary.ingredientId.id;
       const images = JSON.parse(localStorage.getItem("images"));
 
       const imageBlobs = await Promise.all(
@@ -335,4 +297,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>

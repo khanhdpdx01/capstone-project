@@ -7,7 +7,7 @@
   >
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
-        <li>
+        <!-- <li>
           <router-link
             :to="{ path: '/dashboard/home' }"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -24,7 +24,7 @@
             </svg>
             <span class="ml-3">Dashboard</span>
           </router-link>
-        </li>
+        </li> -->
         <li>
           <router-link
             :to="{ path: '/dashboard/products' }"
@@ -71,7 +71,7 @@
             > -->
           </router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link
             :to="{ path: '/dashboard/raw-material/info' }"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -88,12 +88,12 @@
               ></path>
             </svg>
             <span class="flex-1 ml-3 whitespace-nowrap">Vùng sản xuất</span>
-            <!-- <span
+            <span
               class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300"
               >Pro</span
-            > -->
+            > 
           </router-link>
-        </li>
+        </li>  -->
         <li>
           <router-link
             :to="{ path: '/dashboard/diaries' }"
@@ -114,10 +114,10 @@
               ></path>
             </svg>
             <span class="flex-1 ml-3 whitespace-nowrap">Sổ ghi chép</span>
-            <span
+            <!-- <span
               class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
               >10</span
-            >
+            > -->
           </router-link>
         </li>
         <li>
@@ -138,10 +138,10 @@
                 clip-rule="evenodd"
               ></path>
             </svg>
-            <span class="flex-1 ml-3 whitespace-nowrap">Tem truy vết</span>
+            <span class="flex-1 ml-3 whitespace-nowrap">Lô hàng</span>
           </router-link>
         </li>
-        <li>
+        <!-- <li>
           <a
             href="#"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -161,8 +161,8 @@
             </svg>
             <span class="flex-1 ml-3 whitespace-nowrap">Phân phối</span>
           </a>
-        </li>
-        <li>
+        </li> -->
+        <!-- <li>
           <a
             href="#"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -203,7 +203,7 @@
             </svg>
             <span class="flex-1 ml-3 whitespace-nowrap">Vùng sản xuất</span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </aside>

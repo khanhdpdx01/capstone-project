@@ -25,7 +25,7 @@
                       d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
                     ></path>
                   </svg>
-                  Tem truy xuất
+                  Lô hàng
                 </a>
               </li>
               <li>
@@ -45,7 +45,7 @@
                   <a
                     href="#"
                     class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white"
-                    >Danh sách tem</a
+                    >Danh sách lô hàng</a
                   >
                 </div>
               </li>
@@ -54,7 +54,7 @@
           <h1
             class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
           >
-            Danh sách tem
+            Danh sách lô hàng
           </h1>
         </div>
         <div
@@ -121,7 +121,7 @@
                     scope="col"
                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                   >
-                   Sản phẩm thành phần
+                    Sản phẩm thành phần
                   </th>
                   <th
                     scope="col"
@@ -181,6 +181,7 @@
                   <td class="p-4 space-x-2 whitespace-nowrap">
                     <button
                       type="button"
+                      @click="viewDetail(packageDto.sku)"
                       id="updateProductButton"
                       class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
@@ -199,7 +200,7 @@
                           clip-rule="evenodd"
                         ></path>
                       </svg>
-                      Cập nhật
+                      Chi tiết
                     </button>
                     <button
                       type="button"
@@ -253,7 +254,7 @@ export default {
         totalItems: window.VUE_APP_TOTAL_ITEMS,
         currentPage: 1,
       },
-      packages: []
+      packages: [],
     };
   },
   async created() {
@@ -282,6 +283,9 @@ export default {
         this.page.currentPage = currentPage;
         this.packages = data;
       }
+    },
+    viewDetail(sku) {
+      this.$router.push({ path: `/dashboard/packages/${sku}` });
     },
   },
 };

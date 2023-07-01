@@ -189,14 +189,14 @@
                 {{ item.description }}
               </p>
               <div
-                v-for="index in 3"
+                v-for="(hash, index) in item.imagePath.split(',')"
                 style="width: 100px; height: 100px"
                 class="relative mt-3 ml-3 border-2 shadow-xl rounded-md inline-block"
                 :key="index"
               >
                 <img
                   class="object-cover w-full h-full"
-                  src="https://co4la.vn/wp-content/uploads/2022/05/anh-dai-dien-co-4-la-1.jpg"
+                  :src="`http://localhost:3000/files/${hash}`"
                 />
               </div>
             </li>
@@ -255,8 +255,10 @@ export default {
       console.log(sortedDiary);
     },
     createDetailDiary() {
-        this.$router.push({path: `/dashboard/diaries/create/${this.$route.params.id}`})
-    }
+      this.$router.push({
+        path: `/dashboard/diaries/create/${this.$route.params.id}`,
+      });
+    },
   },
 };
 </script>
