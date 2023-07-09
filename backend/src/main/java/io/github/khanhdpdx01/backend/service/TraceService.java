@@ -41,9 +41,9 @@ public class TraceService {
         PackageProduct packageProduct = packageRepository.findById(sku)
                 .orElseThrow(() -> new RuntimeException("Package product not found"));
 
-        Long productId = packageProduct.getProduct().getId();
+        Long diaryId = packageProduct.getDiary().getId();
 
-        Diary diary = diaryRepository.findByProduct(productId)
+        Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new RuntimeException("Diary not found"));
 
         List<DiaryDetail> detailList = diaryDetailRepository.findAllByDiaryId(diary.getId());

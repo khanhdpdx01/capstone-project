@@ -27,6 +27,6 @@ public class PackageProduct {
     private String imagePath;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "diary_id")
+    private Diary diary;
 }

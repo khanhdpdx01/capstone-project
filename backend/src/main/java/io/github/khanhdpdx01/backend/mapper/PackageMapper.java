@@ -10,6 +10,6 @@ import org.mapstruct.factory.Mappers;
 public interface PackageMapper {
     PackageMapper INSTANCE = Mappers.getMapper(PackageMapper.class);
 
-    @Mapping(target = "product.id", source = "packageDto.productId")
+    @Mapping(target = "diary.id", source = "packageDto.diaryId")
     PackageProduct dtoToEntity(PackageDto packageDto);
 }

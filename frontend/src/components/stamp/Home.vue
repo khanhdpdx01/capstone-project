@@ -121,7 +121,7 @@
                     scope="col"
                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                   >
-                    Sản phẩm thành phần
+                    Sổ ghi chép sản xuất
                   </th>
                   <th
                     scope="col"
@@ -171,7 +171,7 @@
                   <td
                     class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {{ packageDto.product.name }}
+                    {{ packageDto.diary.name }}
                   </td>
                   <td
                     class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"

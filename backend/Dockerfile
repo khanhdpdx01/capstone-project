@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:11-jdk-slim-bullseye
 LABEL maintainer="khanhdpdx@gmail.com"
 EXPOSE 3000
 ENV LANG C.UTF-8

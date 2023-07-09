@@ -5,6 +5,10 @@ class DiaryService {
     return http.get("/diaries", params);
   }
 
+  getAllWithoutPaging() {
+    return http.get("/diaries/get-all-without-paging");
+  }
+
   detail(id) {
     return http.get(`/diaries/${id}`);
   }

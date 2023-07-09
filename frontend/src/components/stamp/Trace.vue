@@ -93,6 +93,7 @@
                   <div class="sm:mt-4">
                     <div class="lg:ml-20">
                       <div
+                       @click="viewDetailTransaction(item.transactionId)"
                         class="flex items-center mb-4 px-4 py-2 bg-green-200 rounded-[30px]"
                       >
                         <svg

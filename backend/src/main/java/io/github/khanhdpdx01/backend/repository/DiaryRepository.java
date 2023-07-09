@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -31,4 +32,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
             "set d.transactionId = :transactionId " +
             "where d.id = :diaryId")
     void updateTransactionId(@Param("diaryId") Long diaryId, @Param("transactionId") String transactionId);
+
+    @Query("SELECT d from Diary d " +
+            "where d.createdBy.id = :userId ")
+    List<Diary> findAllWithoutPaging(@Param("userId") Long userId);
 }

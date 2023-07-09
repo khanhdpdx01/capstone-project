@@ -20,5 +20,5 @@ public class PackageDto {
     private String address;
     private String createdBy;
     private int maxScanTimes;
-    private Long productId;
+    private Long diaryId;
 }

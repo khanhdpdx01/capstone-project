@@ -126,4 +126,9 @@ public class DiaryService {
         diary.setStatus(status);
         diaryRepository.save(diary);
     }
+
+    public Object getAllWithoutPaging() {
+        Long userId = authenticationFacade.getUserId();
+        return diaryRepository.findAllWithoutPaging(userId);
+    }
 }

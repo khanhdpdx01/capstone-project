@@ -96,11 +96,11 @@
           <label
             for="name"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Sản phẩm nguyên liệu</label
+            >Sổ ghi chép sản xuất</label
           >
           <multiselect
             v-model="value"
-            :options="products"
+            :options="diaries"
             label="name"
             track-by="name"
           ></multiselect>
@@ -309,11 +309,11 @@ import { Modal } from "flowbite";
 import Datepicker from "flowbite-datepicker/Datepicker";
 import Multiselect from "vue-multiselect";
 import PackageService from "../../services/PackageService";
-import ProductService from "../../services/ProductService";
+import DiaryService from "../../services/DiaryService";
 import FileUpload from "../file/FileUpload.vue";
 import { useToast } from "vue-toastification";
 const packageService = new PackageService();
-const productService = new ProductService();
+const diaryService = new DiaryService();
 const toast = useToast();
 
 export default {
@@ -335,19 +335,19 @@ export default {
         conversionValue: "",
         address: "",
         maxScanTimes: 0,
-        productId: 0,
+        diaryId: 0,
       },
       packageDateEl: null,
       expiryDateEl: null,
       value: null,
-      products: [],
+      diaries: [],
     };
   },
   async created() {
-    const res = await productService.getAllWithoutPaging();
+    const res = await diaryService.getAllWithoutPaging();
 
     if (res.status === 200) {
-      this.products = res.data;
+      this.diaries = res.data;
     }
   },
   mounted() {
@@ -373,7 +373,7 @@ export default {
     async createPackage() {
       this.packageDto.packageDate = this.convertDate(this.packageDateEl.value);
       this.packageDto.expiryDate = this.convertDate(this.expiryDateEl.value);
-      this.packageDto.productId = this.value.id;
+      this.packageDto.diaryId = this.value.id;
 
       const images = JSON.parse(localStorage.getItem("images"));
 

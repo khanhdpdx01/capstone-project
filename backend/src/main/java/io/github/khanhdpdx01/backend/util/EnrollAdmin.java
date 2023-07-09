@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 public class EnrollAdmin {
-    private static final String STATIC_IP = "34.124.213.37";
+    private static final String STATIC_IP = "35.240.177.136";
     private static final String CA_PORT = "1054";
 
     public static void main(String[] args) throws Exception {

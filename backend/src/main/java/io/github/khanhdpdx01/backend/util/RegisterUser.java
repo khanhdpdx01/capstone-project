@@ -25,7 +25,7 @@ public class RegisterUser {
 		props.put("pemFile",
 			"/home/khanh/capstone/wallet/ca.issuer.com-cert.pem");
 		props.put("allowAllHostNames", "false");
-		HFCAClient caClient = HFCAClient.createNewInstance("https://34.124.214.148:7054", props);
+		HFCAClient caClient = HFCAClient.createNewInstance("https://35.240.177.136:7054", props);
 		CryptoSuite cryptoSuite = CryptoSuiteFactory.getDefault().getCryptoSuite();
 		caClient.setCryptoSuite(cryptoSuite);
 

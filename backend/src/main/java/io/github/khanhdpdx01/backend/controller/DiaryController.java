@@ -23,6 +23,13 @@ public class DiaryController {
         this.diaryService = diaryService;
     }
 
+    @GetMapping("/get-all-without-paging")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
+    public ResponseEntity<?> getAllWithPaging() {
+        return ResponseEntity.status(HttpStatus.OK).body(diaryService.getAllWithoutPaging());
+    }
+
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
     public ResponseEntity<?> getAllWithPaging(@Valid PaginationParams params) {
