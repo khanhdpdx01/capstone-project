@@ -26,7 +26,7 @@ services:
     build:
       context: ./frontend                
     environment:
-    - VUE_APP_SERVICE_ENDPOINT=http://localhost:3000
+    - VUE_APP_SERVICE_ENDPOINT=http://192.168.1.5:3000
     - VUE_APP_IPFS_ENDPOINT=http://192.168.49.182:8080
     - VUE_APP_EXPLORER_ENDPOINT=http://35.240.177.136:8080
     - VUE_APP_TOTAL_ITEMS=10

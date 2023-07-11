@@ -358,7 +358,7 @@ export default {
     },
     createQrCode(url) {
       this.code = url;
-      this.message = `http://${window.location.hostname}:8080/trace/${url}`;
+      this.message = `http://${window.location.hostname}:8000/trace/${url}`;
       const ref = document.getElementById("create-qr-code");
       this.modal = new Modal(ref);
       this.modal.show();

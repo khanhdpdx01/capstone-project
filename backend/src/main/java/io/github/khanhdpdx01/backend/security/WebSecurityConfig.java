@@ -26,6 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtRequestFilter jwtRequestFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final UserDetailsServiceImpl userDetailsService;
+    private final String PUBLIC_IP = "35.240.177.136";
+//    private final String PUBLIC_IP = "localhost";
 
 //    @Value("${server.host-name}")
 //    private String hostName;
@@ -48,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll().and()
+                .antMatchers("/api/auth/**", "/api/trace/**").permitAll().and()
                 .logout()
                 .invalidateHttpSession(true);
 
@@ -78,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        CorsConfiguration configuration = new CorsConfiguration();
 //        configuration.setAllowCredentials(true);
 //        configuration.setMaxAge(3600L);
-//        configuration.setAllowedOrigins(Collections.singletonList("*"));
+//        configuration.setAllowedOrigins(Collections.singletonList("http://192.168.1.5"));
 //        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 //        configuration.setAllowedHeaders(Collections.singletonList("*"));
 //        configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
@@ -90,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+        configuration.setAllowedOriginPatterns(Collections.singletonList("http://" + PUBLIC_IP + ":8000"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);

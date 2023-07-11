@@ -1,5 +1,6 @@
 package io.github.khanhdpdx01.backend.controller;
 
+import io.github.khanhdpdx01.backend.dto.diary.DiaryDto;
 import io.github.khanhdpdx01.backend.dto.pagination.PaginationParams;
 import io.github.khanhdpdx01.backend.dto.pagination.PaginationResponse;
 import io.github.khanhdpdx01.backend.dto.product.ProductDto;
@@ -30,6 +31,13 @@ public class ProductController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
     public ResponseEntity<?> getAllWithPaging() {
         return ResponseEntity.status(HttpStatus.OK).body(productService.getAllWithoutPaging());
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_REPRESENTATIVE')")
+    public ResponseEntity<?> getDetail(@PathVariable("id") Long id) {
+        Product dto = productService.getDetail(id);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
     @GetMapping
