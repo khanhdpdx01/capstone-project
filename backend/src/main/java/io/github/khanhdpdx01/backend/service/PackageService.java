@@ -1,6 +1,7 @@
 package io.github.khanhdpdx01.backend.service;
 
 import io.github.khanhdpdx01.backend.dto.packing.PackageDto;
+import io.github.khanhdpdx01.backend.dto.stamp.CurrentValue;
 import io.github.khanhdpdx01.backend.entity.PackageProduct;
 import io.github.khanhdpdx01.backend.entity.Stamp;
 import io.github.khanhdpdx01.backend.entity.StampStatus;
@@ -64,33 +65,36 @@ public class PackageService {
 
         // create product stamps
         int quantity = packageDto.getQuantity();
+        CurrentValue value = stampRepository.getCurrentId();
+        int curentValue = value.getCurrentId();
         int i;
+
         Stamp stamp = null;
         List<Stamp> stamps = new ArrayList<>();
         for (i = 0; i < quantity; ++i) {
             stamp = new Stamp();
-            stamp.setId("ITEM" + (i + 1));
             stamp.setStatus(StampStatus.AVAILABLE);
             stamp.setType(StampType.PRODUCT);
             stamp.setMaxScanTimes(packageDto.getMaxScanTimes());
             stamp.setSku(newPackageProduct);
+            stamp.setCode("VN" + (curentValue + i));
             stamps.add(stamp);
         }
         stampRepository.saveAll(stamps);
 
         // create carton stamps
-        quantity = quantity / packageDto.getConversionValue();
-        stamps.clear();
-        for (i = 0; i < quantity; ++i) {
-            stamp = new Stamp();
-            stamp.setId("CAT" + (i + 1));
-            stamp.setStatus(StampStatus.AVAILABLE);
-            stamp.setType(StampType.CARTON);
-            stamp.setMaxScanTimes(packageDto.getMaxScanTimes());
-            stamp.setSku(newPackageProduct);
-            stamps.add(stamp);
-        }
-        stampRepository.saveAll(stamps);
+//        quantity = quantity / packageDto.getConversionValue();
+//        stamps.clear();
+//        for (i = 0; i < quantity; ++i) {
+//            stamp = new Stamp();
+//            stamp.setId("CAT" + (i + 1));
+//            stamp.setStatus(StampStatus.AVAILABLE);
+//            stamp.setType(StampType.CARTON);
+//            stamp.setMaxScanTimes(packageDto.getMaxScanTimes());
+//            stamp.setSku(newPackageProduct);
+//            stamps.add(stamp);
+//        }
+//        stampRepository.saveAll(stamps);
 
         logger.info("Create stamp success");
     }

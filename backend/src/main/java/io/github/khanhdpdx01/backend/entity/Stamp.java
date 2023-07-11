@@ -12,9 +12,11 @@ import java.sql.Timestamp;
 @Table(name = "series_stamps")
 public class Stamp {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String parentId;
     private int maxScanTimes;
+    private String code;
     @Enumerated(EnumType.ORDINAL)
     private StampType type;
     @Enumerated(EnumType.ORDINAL)

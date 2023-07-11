@@ -1,15 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="w-full pt-8 bg-white">
-    <div class="px-[250px] sm:px-0 sm:m-4">
-      <div class="lg:grid lg:grid-cols-3 lg:gap-4">
-        <div>
+  <div class="w-full mt-8 bg-white">
+    <div class="px-[250px] max-[639px]:px-0 max-[639px]:m-4">
+      <div class="grid grid-cols-3 gap-4 max-[639px]:grid-cols-none">
+        <div class="mx-auto">
           <img
-            className="lg:w-[450px] lg:h-[400px] rounded-[25px] sm:w-[w-full] sm:h-[full]"
+            className="w-[450px] h-[400px] rounded-[25px] max-[639px]:w-[w-full] max-[639px]:h-[full]"
             :src="`http://localhost:3000/files/${packageDto.imagePath}`"
           />
           <div
-            className="lg:w-[450px] mt-4 py-4 px-8 border rounded-xl border-neutral-300 border-opacity-50"
+            className="w-[450px] mt-4 py-4 px-8 border rounded-xl border-neutral-300 border-opacity-50"
           >
             <h1 className="text-center text-slate-700 text-[28px] font-bold">
               {{ packageDto.productName }}
@@ -28,8 +28,8 @@
             </div>
           </div>
         </div>
-        <div class="lg:col-span-2 sm:mt-4">
-          <!-- <ul class="lg:h-20 lg:grid lg:grid-cols-3 opacity-80 bg-slate-50 rounded-lg">
+        <div class="col-span-2 max-[639px]:mt-4">
+          <ul class="h-20 grid grid-cols-3 opacity-80 bg-slate-50 rounded-lg max-[639px]:hidden">
             <li class="w-full h-full flex justify-center items-center">
               <span class="text-slate-700 text-[18px] font-bold"
                 >Thông tin sản phẩm</span
@@ -47,16 +47,18 @@
                 >Thông tin công ty</span
               >
             </li>
-          </ul> -->
+          </ul>
           <div
             class="mt-4 border rounded-xl border-neutral-300 border-opacity-50"
           >
-            <div class="m-4 text-slate-700 text-[24px] font-semibold sm:text-[16px]">
+            <div
+              class="m-4 text-slate-700 text-[24px] font-semibold max-[639px]:text-[16px]"
+            >
               Thông tin truy xuất nguồn gốc
             </div>
             <div class="w-full">
               <div
-                class="mx-10 sm:mx-4"
+                class="mx-10 max-[639px]:mx-4"
                 v-for="(item, index) in diary.diaryDetails"
                 :key="index"
               >
@@ -80,21 +82,21 @@
                     {{ getStep(item.step) }}</span
                   >
                 </div>
-                <div class="lg:flex">
-                  <div class="flex flex-col sm:flex-row">
+                <div class="flex max-[639px]:flex-col">
+                  <div class="flex flex-col max-[639px]:flex-row">
                     <span
-                      class="text-center text-teal-900 text-[16px] font-semibold sm:mr-4"
+                      class="text-center text-teal-900 text-[16px] font-semibold max-[639px]:mr-4"
                       >10:00</span
                     >
                     <div class="text-teal-900 text-[16px] font-normal">
                       {{ formatVNDate(item.createdAt) }}
                     </div>
                   </div>
-                  <div class="sm:mt-4">
-                    <div class="lg:ml-20">
+                  <div class="max-[639px]:mt-4">
+                    <div class="ml-20 max-[639px]:m-0">
                       <div
-                       @click="viewDetailTransaction(item.transactionId)"
-                        class="flex items-center mb-4 px-4 py-2 bg-green-200 rounded-[30px]"
+                        @click="viewDetailTransaction(item.transactionId)"
+                        class="flex items-center mb-4 px-4 py-2 bg-green-200 rounded-[30px] cursor-pointer"
                       >
                         <svg
                           width="29"
@@ -201,6 +203,9 @@ export default {
     },
     formatVNDate(date) {
       return new Date(date).toLocaleDateString("vi-VN");
+    },
+    viewDetailTransaction(transactionId) {
+      window.open(window.VUE_APP_EXPLORER_ENDPOINT + transactionId, "_blank");
     },
   },
 };
