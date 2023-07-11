@@ -172,7 +172,7 @@
                     <td
                       class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {{ stamp.id }}
+                      {{ stamp.code }}
                     </td>
                     <td
                       class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -191,7 +191,7 @@
                     </td>
                     <td class="p-4 space-x-2 whitespace-nowrap">
                       <button
-                        @click="detailStamp(stamp.id)"
+                        @click="detailStamp(stamp.code)"
                         type="button"
                         id="updateProductButton"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -212,6 +212,29 @@
                           ></path>
                         </svg>
                         Chi tiết
+                      </button>
+                      <button
+                        @click="createQrCode(stamp.code)"
+                        type="button"
+                        id="updateProductButton"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        <svg
+                          class="w-4 h-4 mr-2"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                          ></path>
+                          <path
+                            fill-rule="evenodd"
+                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                        Tạo QR Code
                       </button>
                       <!-- <button
                         type="button"
@@ -239,7 +262,7 @@
             </div>
           </div>
         </div>
-
+        
         <div
           class="sticky bottom-0 right-0 w-full p-4 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700"
         >
@@ -251,17 +274,36 @@
         </div>
       </div>
     </div>
+
+    <div
+      id="create-qr-code"
+      tabindex="-1"
+      aria-hidden="true"
+      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+    >
+      <div class="relative">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <div class="p-4">
+            <VueQRCodeComponent :text="message" error-level="L" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { Modal } from "flowbite";
 import Pagination from "../pagination/Pagination.vue";
 import PackageService from "../../services/PackageService";
+import VueQRCodeComponent from "vue-qrcode-component";
 const packageService = new PackageService();
 
 export default {
   components: {
     Pagination,
+    VueQRCodeComponent,
   },
   data() {
     return {
@@ -273,6 +315,7 @@ export default {
       packageDto: {},
       stamps: [],
       id: 0,
+      message: "",
     };
   },
   async created() {
@@ -310,6 +353,12 @@ export default {
     },
     detailStamp(id) {
       this.$router.push({ path: `/trace/${id}` });
+    },
+     createQrCode(url) {
+      this.message = `http://${window.location.hostname}:8080/trace/${url}`;
+      const ref = document.getElementById("create-qr-code");
+      this.modal = new Modal(ref);
+      this.modal.show();
     },
   },
 };

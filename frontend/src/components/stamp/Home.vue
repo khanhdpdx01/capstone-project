@@ -202,7 +202,7 @@
                       </svg>
                       Chi tiết
                     </button>
-                    <button
+                    <!-- <button
                       type="button"
                       id="deleteProductButton"
                       class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
@@ -220,7 +220,7 @@
                         ></path>
                       </svg>
                       Xóa
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>
@@ -243,10 +243,14 @@
 </template>
 
 <script>
+import Pagination from "../pagination/Pagination.vue";
 import PackageService from "../../services/PackageService";
 const packageService = new PackageService();
 
 export default {
+  components: {
+    Pagination,
+  },
   data() {
     return {
       page: {

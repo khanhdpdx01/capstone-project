@@ -32,8 +32,8 @@ public class TraceService {
         this.diaryDetailRepository = diaryDetailRepository;
     }
 
-    public TraceDto trace(String id) {
-        Stamp stamp = stampRepository.findById(id)
+    public TraceDto trace(String code) {
+        Stamp stamp = stampRepository.findByCode(code)
                 .orElseThrow(() -> new RuntimeException("Stamp not found"));
 
         String sku = stamp.getSku().getSku();

@@ -1,12 +1,9 @@
 package io.github.khanhdpdx01.backend.service;
 
 import io.github.khanhdpdx01.backend.dto.packing.PackageDto;
-import io.github.khanhdpdx01.backend.dto.stamp.CurrentValue;
-import io.github.khanhdpdx01.backend.entity.PackageProduct;
-import io.github.khanhdpdx01.backend.entity.Stamp;
-import io.github.khanhdpdx01.backend.entity.StampStatus;
-import io.github.khanhdpdx01.backend.entity.StampType;
+import io.github.khanhdpdx01.backend.entity.*;
 import io.github.khanhdpdx01.backend.mapper.PackageMapper;
+import io.github.khanhdpdx01.backend.repository.KdmConstRepository;
 import io.github.khanhdpdx01.backend.repository.PackageRepository;
 import io.github.khanhdpdx01.backend.repository.StampRepository;
 import io.github.khanhdpdx01.backend.util.FileUtil;
@@ -32,13 +29,15 @@ public class PackageService {
     private static final Logger logger = LoggerFactory.getLogger(PartnerService.class);
     private final StampRepository stampRepository;
     private final PackageRepository packageRepository;
+    private final KdmConstRepository kdmConstRepository;
 
     @Value("${storage.file.directory}")
     private String fileDirectory;
 
-    public PackageService(StampRepository stampRepository, PackageRepository packageRepository) {
+    public PackageService(StampRepository stampRepository, PackageRepository packageRepository, KdmConstRepository kdmConstRepository) {
         this.stampRepository = stampRepository;
         this.packageRepository = packageRepository;
+        this.kdmConstRepository = kdmConstRepository;
     }
 
     public void doPackage(PackageDto packageDto, List<MultipartFile> images) {
@@ -65,8 +64,8 @@ public class PackageService {
 
         // create product stamps
         int quantity = packageDto.getQuantity();
-        CurrentValue value = stampRepository.getCurrentId();
-        int curentValue = value.getCurrentId();
+        KdmConst kdmconst = kdmConstRepository.findByName();
+        int curentValue = kdmconst.getValue();
         int i;
 
         Stamp stamp = null;
@@ -81,6 +80,8 @@ public class PackageService {
             stamps.add(stamp);
         }
         stampRepository.saveAll(stamps);
+        kdmconst.setValue(curentValue + quantity);
+        kdmConstRepository.save(kdmconst);
 
         // create carton stamps
 //        quantity = quantity / packageDto.getConversionValue();
