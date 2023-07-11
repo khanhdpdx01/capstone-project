@@ -76,11 +76,11 @@
             </div>
             <div>
               <h3 class="font-semibold text-gray-900">Ngày tạo</h3>
-              <span>{{ packageDto.packageDate }}</span>
+              <span>{{ formatVNDate(packageDto.packageDate) }}</span>
             </div>
             <div>
               <h3 class="font-semibold text-gray-900">Hạn sử dụng</h3>
-              <span>{{ packageDto.expiryDate }}</span>
+              <span>{{ formatVNDate(packageDto.expiryDate) }}</span>
             </div>
             <div>
               <h3 class="font-semibold text-gray-900">Số lượng</h3>
@@ -132,14 +132,14 @@
                       scope="col"
                       class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                     >
-                      Trạng thái
+                      Thể loại
                     </th>
-                    <th
+                    <!-- <th
                       scope="col"
                       class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                     >
                       Trạng thái
-                    </th>
+                    </th> -->
                     <th
                       scope="col"
                       class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
@@ -182,13 +182,13 @@
                     <td
                       class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"
                     >
-                      {{ stamp.type }}
+                      Tem sản phẩm
                     </td>
-                    <td
+                    <!-- <td
                       class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"
                     >
                       {{ stamp.status }}
-                    </td>
+                    </td> -->
                     <td class="p-4 space-x-2 whitespace-nowrap">
                       <button
                         @click="detailStamp(stamp.code)"
@@ -217,7 +217,7 @@
                         @click="createQrCode(stamp.code)"
                         type="button"
                         id="updateProductButton"
-                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
                         <svg
                           class="w-4 h-4 mr-2"
@@ -262,7 +262,7 @@
             </div>
           </div>
         </div>
-        
+
         <div
           class="sticky bottom-0 right-0 w-full p-4 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700"
         >
@@ -286,6 +286,7 @@
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
           <div class="p-4">
             <VueQRCodeComponent :text="message" error-level="L" />
+            <h2 class="text-center font-bold mt-4">{{code}}</h2>
           </div>
         </div>
       </div>
@@ -316,6 +317,7 @@ export default {
       stamps: [],
       id: 0,
       message: "",
+      code: ""
     };
   },
   async created() {
@@ -354,11 +356,15 @@ export default {
     detailStamp(id) {
       this.$router.push({ path: `/trace/${id}` });
     },
-     createQrCode(url) {
+    createQrCode(url) {
+      this.code = url;
       this.message = `http://${window.location.hostname}:8080/trace/${url}`;
       const ref = document.getElementById("create-qr-code");
       this.modal = new Modal(ref);
       this.modal.show();
+    },
+    formatVNDate(date) {
+      return new Date(date).toLocaleDateString("vi-VN");
     },
   },
 };

@@ -28,11 +28,11 @@
             </svg>
           </button>
           <router-link :to="{ path: '/' }" class="flex ml-2 md:mr-24">
-            <img
+            <!-- <img
               src="https://flowbite.com/docs/images/logo.svg"
               class="h-8 mr-3"
               alt="FlowBite Logo"
-            />
+            /> -->
             <span
               class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"
               >Rice</span
@@ -92,7 +92,7 @@
             </div>
           </div>
           <div v-else class="md:flex text-lg">
-            <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
+            <!-- <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
               >Home</a
             >
             <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
@@ -106,7 +106,7 @@
             >
             <a href="#" class="text-gray-800 hover:text-purple-300 py-3 px-6"
               >FAQ</a
-            >
+            > -->
             <router-link
               :to="{ path: '/sign-in' }"
               class="bg-purple-200 hover:bg-purple-300 rounded-full uppercase text-purple-700 py-3 px-6"

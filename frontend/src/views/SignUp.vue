@@ -3,7 +3,7 @@
   <div
     class="flex flex-col items-center justify-center px-6 mx-auto pt:mt-0 w-[50%] h-[calc(100vh-80px)] dark:bg-gray-900"
   >
-    <a
+    <!-- <a
       href=""
       class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white"
     >
@@ -13,20 +13,20 @@
         alt="FlowBite Logo"
       />
       <span>Rice</span>
-    </a>
+    </a> -->
     <!-- Card -->
     <div
       class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800"
     >
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-        Create a Free Account
+        Đăng ký
       </h2>
       <form class="mt-8 space-y-6" action="#">
         <div>
           <label
             for="email"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Your email</label
+            >Tài khoản</label
           >
           <input
             type="email"
@@ -41,7 +41,7 @@
           <label
             for="password"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Your password</label
+            >Mật khẩu</label
           >
           <input
             type="password"
@@ -56,7 +56,7 @@
           <label
             for="confirm-password"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Confirm password</label
+            >Nhập lại mật khẩu</label
           >
           <input
             type="password"
@@ -69,7 +69,7 @@
         </div>
         <div>
           <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Register with role
+            Đăng ký với vai trò
           </h3>
           <ul
             class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -134,14 +134,14 @@
           type="submit"
           class="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          Create account
+          Tạo tài khoản
         </button>
         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-          Already have an account?
+          Đã có tài khoản?
           <router-link
             :to="{ path: '/sign-in' }"
             class="text-blue-700 hover:underline dark:text-blue-500"
-            >Login here</router-link
+            >Đăng nhập tại đây</router-link
           >
         </div>
       </form>

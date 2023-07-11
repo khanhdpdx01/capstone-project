@@ -69,7 +69,7 @@
                   name="email"
                   id="products-search"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Tìm theo tên hoặc mã GTIN"
+                  placeholder="Tìm theo tên hoặc mã sản phẩm"
                 />
               </div>
             </form>
@@ -121,7 +121,7 @@
                     scope="col"
                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                   >
-                    Công ty cung cấp
+                    Mã nguyên liệu
                   </th>
                   <th
                     scope="col"
@@ -171,7 +171,7 @@
                   <td
                     class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {{ product.partner.fullName }}
+                    {{ product.gtinCode }}
                   </td>
                   <td
                     class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"

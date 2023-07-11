@@ -3,7 +3,7 @@
   <div
     class="flex flex-col items-center justify-center px-6 pt-8 mx-auto pt:mt-0 w-[50%] h-[calc(100vh-80px)] dark:bg-gray-900"
   >
-    <a
+    <!-- <a
       href=""
       class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white"
     >
@@ -13,20 +13,20 @@
         alt="FlowBite Logo"
       />
       <span>Rice</span>
-    </a>
+    </a> -->
     <!-- Card -->
     <div
       class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800"
     >
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-        Sign in to platform
+        Đăng nhập
       </h2>
       <form class="mt-8 space-y-6" submit.prevent>
         <div>
           <label
             for="email"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Your email</label
+            >Tài khoản</label
           >
           <input
             type="text"
@@ -34,7 +34,6 @@
             v-model="data.username"
             id="email"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="name@company.com"
             required
           />
         </div>
@@ -42,7 +41,7 @@
           <label
             for="password"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Your password</label
+            >Mật khẩu</label
           >
           <input
             type="password"
@@ -54,7 +53,7 @@
             required
           />
         </div>
-        <div class="flex items-start">
+        <!-- <div class="flex items-start">
           <div class="flex items-center h-5">
             <input
               id="remember"
@@ -77,20 +76,20 @@
             class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
             >Lost Password?</a
           >
-        </div>
+        </div> -->
         <button
           @click="doLogin"
           type="button"
           class="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          Login to your account
+          Đăng nhập
         </button>
         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-          Not registered?
+          Chưa đăng ký?
           <router-link
             :to="{ path: '/sign-up' }"
             class="text-blue-700 hover:underline dark:text-blue-500"
-            >Create account</router-link
+            >Tạo tài khoản</router-link
           >
         </div>
       </form>
@@ -122,7 +121,7 @@ export default {
 
       if (this.hasLogin) {
         toast.success('Đăng nhập thành công');
-        this.$router.push({ path: "/dashboard/home" });
+        this.$router.push({ path: "/dashboard/products" });
       }
     },
   },

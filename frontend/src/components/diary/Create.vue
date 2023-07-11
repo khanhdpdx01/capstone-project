@@ -79,7 +79,7 @@
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 >
                   <option selected=""></option>
-                  <option value="SOAK_SEED">Ngâm giống/Monitors</option>
+                  <option value="SOAK_SEED">Ngâm giống</option>
                   <option value="SEEDING">Gieo trồng</option>
                   <option value="FERTILIZATION">Bón phân</option>
                   <option value="TAKE_CART_OF">Chăm sóc</option>
@@ -149,57 +149,63 @@
       </section>
 
       <ol
-        class="relative bg-white border-l border-r border-gray-200 dark:border-gray-700 p-4 w-[50%]"
-      >
-        <li
-          class="mb-10 ml-6"
-          v-for="(item, index) in diary.diaryDetails"
-          :key="index"
-        >
-          <span
-            class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900"
+            class="relative bg-white border-l border-r border-gray-200 dark:border-gray-700 pr-4 w-[50%]"
           >
-            <svg
-              aria-hidden="true"
-              class="w-3 h-3 text-blue-800 dark:text-blue-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+            <li
+              class="mb-10 ml-6"
+              v-for="(item, index) in diary.diaryDetails"
+              :key="index"
             >
-              <path
-                fill-rule="evenodd"
-                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </span>
-          <h3
-            class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white"
-          >
-            {{ getStep(item.step) }}
-          </h3>
-          <time
-            class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
-            >Cập nhật lúc {{ item.createdAt }}</time
-          >
-          <p
-            class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400"
-          >
-            {{ item.description }}
-          </p>
-          <div
-            v-for="(hash, index) in item.imagePath.split(',')"
-            style="width: 100px; height: 100px"
-            class="relative mt-3 ml-3 border-2 shadow-xl rounded-md inline-block"
-            :key="index"
-          >
-            <img
-              class="object-cover w-full h-full"
-              :src="`http://localhost:3000/files/${hash}`"
-            />
-          </div>
-        </li>
-      </ol>
+              <span
+                class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="w-3 h-3 text-blue-800 dark:text-blue-300"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+              <h3
+                class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white"
+              >
+                {{ getStep(item.step) }}
+              </h3>
+              <p
+                class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400"
+              >
+                Nguyên liệu: {{ item.ingredient.name }}
+              </p>
+              <p
+                class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400"
+              >
+                Ghi chú: {{ item.description }}
+              </p>
+              <time
+                class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
+                >Ghi chép lúc {{ formatVNDate(item.createdAt) }}</time
+              >
+              
+              <div
+                v-for="(hash, index) in item.imagePath.split(',')"
+                style="width: 100px; height: 100px"
+                class="relative mt-3 ml-3 border-2 shadow-xl rounded-md inline-block"
+                :key="index"
+              >
+                <img
+                  class="object-cover w-full h-full"
+                  :src="`http://localhost:3000/files/${hash}`"
+                />
+              </div>
+            </li>
+          </ol>
     </div>
   </div>
 </template>
@@ -292,6 +298,9 @@ export default {
         diaryId: 0,
         ingredientId: 0,
       };
+    },
+    formatVNDate(date) {
+      return new Date(date).toLocaleDateString("vi-VN");
     },
   },
 };

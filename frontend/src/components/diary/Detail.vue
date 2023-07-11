@@ -79,15 +79,15 @@
             </div>
             <div>
               <h3 class="font-semibold text-gray-900">Tên sản phẩm</h3>
-              <span>{{ diary.productId }}</span>
+              <span>{{ product.name }}</span>
             </div>
             <div>
               <h3 class="font-semibold text-gray-900">Trạng thái ghi chép</h3>
-              <span>{{ diary.status }}</span>
+              <span>{{ getStatus(diary.status) }}</span>
             </div>
             <div>
               <h3 class="font-semibold text-gray-900">Thời gian tạo</h3>
-              <span>{{ diary.createdAt }}</span>
+              <span>{{ formatVNDate(diary.createdAt) }}</span>
             </div>
           </div>
         </div>
@@ -179,15 +179,21 @@
               >
                 {{ getStep(item.step) }}
               </h3>
-              <time
-                class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
-                >Cập nhật lúc {{ item.createdAt }}</time
-              >
               <p
                 class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400"
               >
-                {{ item.description }}
+                Nguyên liệu: {{ item.ingredient.name }}
               </p>
+              <p
+                class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400"
+              >
+                Ghi chú: {{ item.description }}
+              </p>
+              <time
+                class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
+                >Ghi chép lúc {{ formatVNDate(item.createdAt) }}</time
+              >
+              
               <div
                 v-for="(hash, index) in item.imagePath.split(',')"
                 style="width: 100px; height: 100px"
@@ -209,13 +215,17 @@
 
 <script>
 import DiaryService from "../../services/DiaryService";
+import ProductService from "../../services/ProductService";
 import DiaryStep from "../../enums/DiaryStep";
+import DiaryStatus from "../../enums/DiaryStatus";
 const diaryService = new DiaryService();
+const productService = new ProductService();
 
 export default {
   data() {
     return {
       diary: {},
+      product: {}
     };
   },
   async created() {
@@ -229,6 +239,11 @@ export default {
       if (res.status === 200) {
         this.diary = res.data;
         this.sortDiary(this.diary);
+      }
+
+      const res1 = await productService.detail(this.diary.productId);
+      if (res1.status === 200) {
+        this.product = res1.data;
       }
     },
     getStep(step) {
@@ -258,6 +273,12 @@ export default {
       this.$router.push({
         path: `/dashboard/diaries/create/${this.$route.params.id}`,
       });
+    },
+    formatVNDate(date) {
+      return new Date(date).toLocaleDateString("vi-VN");
+    },
+    getStatus(status) {
+      return DiaryStatus[status];
     },
   },
 };

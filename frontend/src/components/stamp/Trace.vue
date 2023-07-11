@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="w-full mt-8 bg-white">
-    <div class="px-[250px] max-[639px]:px-0 max-[639px]:m-4">
+  <div class="w-full pt-8 bg-white">
+    <div class="max-[639px]:px-0 max-[639px]:m-4">
       <div class="grid grid-cols-3 gap-4 max-[639px]:grid-cols-none">
         <div class="mx-auto">
           <img
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="col-span-2 max-[639px]:mt-4">
-          <ul class="h-20 grid grid-cols-3 opacity-80 bg-slate-50 rounded-lg max-[639px]:hidden">
+          <!-- <ul class="h-20 grid grid-cols-3 opacity-80 bg-slate-50 rounded-lg max-[639px]:hidden">
             <li class="w-full h-full flex justify-center items-center">
               <span class="text-slate-700 text-[18px] font-bold"
                 >Thông tin sản phẩm</span
@@ -47,7 +47,7 @@
                 >Thông tin công ty</span
               >
             </li>
-          </ul>
+          </ul> -->
           <div
             class="mt-4 border rounded-xl border-neutral-300 border-opacity-50"
           >
@@ -135,11 +135,11 @@
                         <h3 class="font-semibold text-gray-900">
                           Người thực hiện
                         </h3>
-                        <span>ST25</span>
+                        <span>{{item.createdBy.fullName}}</span>
                       </div>
                       <div class="mb-4">
                         <h3 class="font-semibold text-gray-900">Nguyên liệu</h3>
-                        <span>ST25</span>
+                        <span>{{ item.ingredient.name }}</span>
                       </div>
                       <div class="mb-4">
                         <h3 class="font-semibold text-gray-900">Ghi chú</h3>
