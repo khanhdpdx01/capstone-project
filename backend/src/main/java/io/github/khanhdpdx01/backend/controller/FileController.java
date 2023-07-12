@@ -15,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/api/files")
 public class FileController {
     @Value("${storage.file.directory}")
     private String fileDirectory;

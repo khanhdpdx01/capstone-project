@@ -201,7 +201,7 @@
               >
                 <img
                   class="object-cover w-full h-full"
-                  :src="`http://localhost:3000/files/${hash}`"
+                  :src="`${host}/files/${hash}`"
                 />
               </div>
             </li>
@@ -237,6 +237,7 @@ export default {
       },
       diary: {},
       ingredients: [],
+      host: window.VUE_APP_SERVICE_ENDPOINT
     };
   },
   async created() {

@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**", "/api/trace/**").permitAll().and()
+                .antMatchers("/api/auth/**", "/api/trace/**", "/api/files/**").permitAll().and()
                 .logout()
                 .invalidateHttpSession(true);
 
